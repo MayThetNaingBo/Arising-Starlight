@@ -35,7 +35,7 @@ export default function MemberAuth() {
         try {
             // Make POST request to the backend
             const response = await axios.post(
-                "http://localhost:5050/api/member/signin",
+                "http://${import.meta.env.VITE_API_URL}/api/member/signin",
                 normalizedData,
                 {
                     headers: {

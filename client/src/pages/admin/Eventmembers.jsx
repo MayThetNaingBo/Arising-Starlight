@@ -9,13 +9,13 @@ export default function EventMembers() {
 
     useEffect(() => {
         // Fetch event details
-        fetch(`http://localhost:5050/api/events/${id}`)
+        fetch(`http://${import.meta.env.VITE_API_URL}/api/events/${id}`)
             .then((res) => res.json())
             .then((data) => {
                 setEventTitle(data.title); // Set event title
     
                 // Fetch members using 'populate'
-                fetch(`http://localhost:5050/api/events/${id}/members`)
+                fetch(`http://${import.meta.env.VITE_API_URL}/api/events/${id}/members`)
                     .then((res) => res.json())
                     .then((members) => setMembers(members)) // Set members
                     .catch((err) =>
@@ -30,7 +30,7 @@ export default function EventMembers() {
     const handleApprove = async (memberId) => {
         try {
             const response = await fetch(
-                `http://localhost:5050/api/events/${id}/approve-request`,
+                `http://${import.meta.env.VITE_API_URL}/api/events/${id}/approve-request`,
                 {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -41,7 +41,7 @@ export default function EventMembers() {
             if (response.ok) {
                 alert("Member approved and added!");
                 // Refresh members list immediately
-                fetch(`http://localhost:5050/api/events/${id}/members`)
+                fetch(`http://${import.meta.env.VITE_API_URL}/api/events/${id}/members`)
                     .then((res) => res.json())
                     .then((data) => setMembers(data))
                     .catch((err) =>
@@ -65,7 +65,7 @@ export default function EventMembers() {
 
         try {
             const response = await fetch(
-                `http://localhost:5050/api/events/${id}/remove-member/${memberId}`,
+                `http://${import.meta.env.VITE_API_URL}/api/events/${id}/remove-member/${memberId}`,
                 {
                     method: "DELETE",
                 }

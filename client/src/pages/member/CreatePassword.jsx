@@ -20,7 +20,7 @@ export default function CreatePassword() {
         const validateToken = async () => {
             try {
                 const response = await axios.get(
-                    `http://localhost:5050/api/validate-token?token=${token}`
+                    `http://${import.meta.env.VITE_API_URL}/api/validate-token?token=${token}`
                 );
                 if (response.data.valid) {
                     setIsValidToken(true);
@@ -56,7 +56,7 @@ export default function CreatePassword() {
     
         try {
             const response = await axios.post(
-                "http://localhost:5050/api/create-password",
+                "http://${import.meta.env.VITE_API_URL}/api/create-password",
                 {
                     token,
                     password,

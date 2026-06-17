@@ -17,7 +17,7 @@ export default function EditMember() {
         const fetchMember = async () => {
             try {
                 const response = await fetch(
-                    `http://localhost:5050/api/members/${id}`
+                    `http://${import.meta.env.VITE_API_URL}/api/members/${id}`
                 );
                 if (!response.ok) {
                     throw new Error("Failed to fetch member data.");
@@ -44,7 +44,7 @@ export default function EditMember() {
         try {
             // Update only name and school, excluding email
             const response = await fetch(
-                `http://localhost:5050/api/members/${id}`,
+                `http://${import.meta.env.VITE_API_URL}/api/members/${id}`,
                 {
                     method: "PUT",
                     headers: {

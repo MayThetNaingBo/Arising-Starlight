@@ -27,7 +27,7 @@ const AdminChangePassword = () => {
 
         try {
             const response = await axios.put(
-                `http://localhost:5050/api/admin/change-password`,
+                `http://${import.meta.env.VITE_API_URL}/api/admin/change-password`,
                 {
                     email: adminEmail,
                     currentPassword: formData.currentPassword,

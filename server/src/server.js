@@ -191,7 +191,7 @@ app.post("/api/members/add", async (req, res) => {
 
         await newMember.save();
 
-        const link = `http://localhost:5173/create-password?token=${token}`;
+        const link = `http://${import.meta.env.VITE_API_URL}/create-password?token=${token}`;
         const mailOptions = {
             from: process.env.EMAIL,
             to: normalizedEmail,

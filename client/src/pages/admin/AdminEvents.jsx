@@ -11,7 +11,7 @@ export default function EventList() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch("http://localhost:5050/api/events")
+        fetch("http://${import.meta.env.VITE_API_URL}/api/events")
             .then((res) => res.json())
             .then((data) => setEvents(data))
             .catch((err) => console.error("Error fetching events:", err));
@@ -24,7 +24,7 @@ export default function EventList() {
     const handleDelete = async () => {
         if (!eventToDelete) return;
         try {
-            await fetch(`http://localhost:5050/api/events/${eventToDelete}`, {
+            await fetch(`http://${import.meta.env.VITE_API_URL}/api/events/${eventToDelete}`, {
                 method: "DELETE",
             });
             setEvents(events.filter((event) => event._id !== eventToDelete));

@@ -24,7 +24,7 @@ export default function AddEvent() {
         setError("");
 
         try {
-            const response = await fetch("http://localhost:5050/api/events", {
+            const response = await fetch("http://${import.meta.env.VITE_API_URL}/api/events", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

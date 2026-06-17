@@ -16,7 +16,7 @@ export default function EditEvent() {
 
     useEffect(() => {
         // Fetch event details by ID
-        fetch(`http://localhost:5050/api/events/${id}`)
+        fetch(`http://${import.meta.env.VITE_API_URL}/api/events/${id}`)
             .then((res) => res.json())
             .then((data) => setEvent(data))
             .catch((err) => console.error("Error fetching event:", err));
@@ -39,7 +39,7 @@ export default function EditEvent() {
 
         try {
             const response = await fetch(
-                `http://localhost:5050/api/events/${id}`,
+                `http://${import.meta.env.VITE_API_URL}/api/events/${id}`,
                 {
                     method: "PUT",
                     headers: {

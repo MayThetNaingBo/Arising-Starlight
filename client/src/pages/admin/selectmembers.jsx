@@ -9,13 +9,13 @@ export default function SelectMembers() {
     // Fetch all members and event members
     useEffect(() => {
         // Fetch all members
-        fetch("http://localhost:5050/api/members")
+        fetch("http://${import.meta.env.VITE_API_URL}/api/members")
             .then((res) => res.json())
             .then((data) => setMembers(data))
             .catch((err) => console.error("Error fetching members:", err));
 
         // Fetch event members
-        fetch(`http://localhost:5050/api/events/${id}/members`)
+        fetch(`http://${import.meta.env.VITE_API_URL}/api/events/${id}/members`)
             .then((res) => res.json())
             .then((data) => {
                 const addedIds = new Set(data.map((member) => member._id)); // Store added member IDs
@@ -30,7 +30,7 @@ export default function SelectMembers() {
     const handleAddMember = async (memberId) => {
         try {
             const response = await fetch(
-                `http://localhost:5050/api/events/${id}/add-member`,
+                `http://${import.meta.env.VITE_API_URL}/api/events/${id}/add-member`,
                 {
                     method: "POST",
                     headers: {

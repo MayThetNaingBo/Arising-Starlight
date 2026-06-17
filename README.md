@@ -132,7 +132,7 @@ npm run dev
 Frontend:
 
 ```text
-http://localhost:5173
+http://${import.meta.env.VITE_API_URL}
 ```
 
 ## User Roles

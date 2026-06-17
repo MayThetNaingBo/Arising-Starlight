@@ -1,0 +1,162 @@
+/* Full container with background */
+.auth-container {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Box in the middle */
+.auth-box {
+    background-color: white;
+    padding: 40px 50px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    position: relative;
+    width: 400px;
+    height: 500px;
+    border-radius: 30px;
+}
+
+/* Logo */
+.logo {
+    width: 200px;
+    margin-top: 1px;
+    margin-bottom: 10px;
+}
+
+/* Headings */
+.auth-box h2 {
+    font-size: 1.7rem;
+    margin: 5px 0;
+}
+
+.auth-box h3 {
+    font-size: 1.8rem;
+    font-weight: bolder;
+    margin-top: 30px;
+    margin-bottom: 50px;
+}
+
+/* Buttons */
+.auth-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.view-btn {
+    background-color: #f8b700;
+    color: black;
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.3s, background-color 0.3s;
+}
+
+.auth-btn:hover {
+    background-color: #e09e00;
+    transform: scale(1.05);
+}
+
+/* Link */
+.public-link {
+    text-decoration: underline;
+    color: #000;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.public-link:hover {
+    color: #e0a800; /* Darker yellow on hover */
+    border-bottom-color: #e0a800; /* Change underline color on hover */
+}
+
+.admin-auth-box h2 {
+    font-size: 2rem;
+    margin-bottom: 50px;
+}
+
+.admin-form-group {
+    margin-bottom: 30px;
+    text-align: left;
+}
+
+label {
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+}
+
+button.sign-in-btn {
+    padding: 12px;
+    background-color: #f8b700;
+    color: #000;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+button.sign-in-btn:hover {
+    background-color: #e09e00;
+    transform: scale(1.05);
+}
+
+.footer-links {
+    margin-top: 20px;
+}
+
+.footer-links a {
+    margin-top: 20px;
+    text-decoration: underline;
+    color: #000000;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.footer-links a:hover {
+    color: #e0a800; /* Darker yellow on hover */
+}
+
+.password-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-container input {
+    width: 100%;
+    padding-right: 35px; /* Space for the icon */
+}
+
+.toggle-password {
+    position: absolute;
+    right: 10px; /* Position the icon inside the input */
+    cursor: pointer;
+    color: #555;
+    font-size: 1.2rem;
+}
+.toggle-password1 {
+    position: absolute;
+    top: 45%;
+    right: 20px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}

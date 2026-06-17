@@ -1,0 +1,580 @@
+/* .navbar {
+    background-color: #f8b700;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.nav-menu {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    gap: 30px;
+}
+
+.nav-item {
+    position: relative;
+    text-align: center;
+}
+
+.nav-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: #212529;
+    cursor: pointer;
+} */
+
+/* Make each label and icon blod in the nvigation bar */
+.nav-link i {
+    font-size: 28px;
+}
+
+.nav-link span {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Container for Home Page */
+.home-container {
+    display: flex;
+    justify-content: center; /* Center both text and image */
+    align-items: center;
+    padding: 20px;
+    background-color: black; /* Black background */
+    color: white; /* White text color */
+    height: 100vh; /* Full screen height */
+    gap: 30px; /* Reduce space between text and image */
+}
+
+/* Text Content Section */
+.home-content {
+    text-align: center; /* Center-align the text */
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center items horizontally */
+    justify-content: center; /* Center items vertically */
+}
+
+/* Welcome To */
+.home-content h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+/* Temasek Polytechnic Film Club */
+.home-content h2 {
+    font-size: 2rem;
+    font-weight: normal;
+    margin-bottom: 30px;
+}
+
+/* Arising Starlights */
+.home-content h3 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #ffc107; /* Yellow text */
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* Add shadow for emphasis */
+    margin-bottom: 50px;
+}
+
+/* Button Container */
+.button-container {
+    display: flex;
+    flex-direction: column; /* Stack buttons vertically */
+    gap: 20px; /* Add vertical space between buttons */
+    align-items: center; /* Center the buttons horizontally */
+}
+
+/* Buttons */
+.join-btn,
+.view-btn {
+    background-color: #ffc107; /* Yellow button */
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.3s, background-color 0.3s;
+}
+
+.join-btn:hover,
+.view-btn:hover {
+    background-color: #e0a800; /* Slightly darker yellow on hover */
+    transform: scale(1.05); /* Slight zoom on hover */
+}
+
+/* CCA Image */
+.home-image {
+    flex: 0 1 auto; /* Keep image size as is */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.home-image img {
+    max-width: 100%;
+    max-height: 70vh; /* Limit the height */
+    object-fit: cover;
+    border-radius: 10px; /* Optional rounded corners */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Subtle shadow for depth */
+}
+
+/* About Us Container */
+.about-container {
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 40px 20px;
+    background-color: black; /* Match the background with the welcome page */
+    color: white; /* White text color */
+}
+
+/* About Us */
+.about-container h2 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+/* About Image */
+.about-image img {
+    width: 100%;
+    max-width: 600px; /* Limit the size of the image */
+    border-radius: 10px; /* Optional rounded corners */
+    margin-bottom: 20px; /* Add space below the image */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Add depth to the image */
+}
+
+/* Text Style */
+.about-text {
+    font-size: 1.2rem;
+    line-height: 1.8; /* Add line spacing for better readability */
+    margin-bottom: 20px; /* Add space below the paragraph */
+    padding: 0 20px; /* Add padding for better layout on smaller screens */
+    max-width: 800px; /* Restrict the text width */
+}
+
+/* Read More Link */
+.read-more {
+    font-size: 1.1rem;
+    color: #ffc107; /* Yellow color */
+    text-decoration: none;
+    font-weight: bold;
+    border-bottom: 2px solid #ffc107; /* Underline with the same color */
+    transition: color 0.3s, border-bottom-color 0.3s;
+}
+
+.read-more:hover {
+    color: #e0a800; /* Darker yellow on hover */
+    border-bottom-color: #e0a800; /* Change underline color on hover */
+}
+
+/* Highlights */
+.highlights-container {
+    text-align: center;
+    padding: 40px 20px;
+    background-color: black;
+    color: white;
+}
+
+.highlights-container h2 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 60px;
+}
+
+/* Highlight Card */
+.highlight-card {
+    background-color: #ffc107;
+    color: black;
+    border-radius: 15px;
+    padding: 30px;
+    max-width: 800px;
+    margin: 0 auto; /* Center the card */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Add depth */
+    position: relative;
+}
+
+.highlight-header h3 {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.highlight-content {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.highlight-image img {
+    max-width: 300px;
+    max-height: 200px;
+    border-radius: 10px;
+}
+
+.highlight-details p {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin: 10px 0;
+    text-align: left;
+}
+
+/* Arrow Button */
+.arrow-btn {
+    background-color: #ffc107;
+    color: #000000;
+    border: none;
+    padding: 10px 15px;
+    font-size: 2rem;
+    font-weight: bold;
+    border-radius: 50%;
+    position: absolute;
+    right: -90px; /* Move it outside the box */
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s, background-color 0.3s;
+    margin-bottom: 40px;
+}
+
+.arrow-btn:hover {
+    background-color: #858585;
+}
+
+/* Social Media Links */
+.social-footer {
+    background-color: black; /* Match the page background */
+    padding: 20px 0;
+    text-align: center;
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 120px; /* Space between icons */
+    margin-top: 20px;
+}
+
+.social-icon {
+    color: white;
+    font-size: 2rem; /* Icon size */
+    text-decoration: none;
+    transition: transform 0.3s, color 0.3s;
+}
+
+.social-icon:hover {
+    color: #ffc107; /* Yellow on hover */
+    transform: scale(1.2); /* Slightly enlarge on hover */
+}
+
+/* About Page */
+.about-page {
+    background-color: white; /* Page background */
+    color: black; /* Text color */
+    padding: 20px 40px;
+    font-family: Arial, sans-serif;
+}
+
+.about-page h2 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center; /* Center align the heading */
+    margin-bottom: 30px;
+}
+
+.about-page p {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
+
+.about-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px; /* Space between text and image */
+}
+
+.about-text {
+    flex: 2; /* Occupies 2/3 of the available space */
+}
+
+.about-image {
+    flex: 1.5; 
+    text-align: center; /* Center the image */
+}
+
+.about-image img {
+    max-width: 100%; /* Ensure the image does not exceed its container */
+    border-radius: 40px; /* Optional rounded corners */
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7); /* Stronger shadow */
+}
+/* Contact Us Page */
+.contact-us-page {
+    display: flex;
+    justify-content: space-between;
+    padding: 50px;
+    font-family: Arial, sans-serif;
+    gap: 60px;
+}
+
+/* Contact Details Section */
+.contact-details {
+    flex: 1;
+    margin-top: 20px;
+}
+
+.contact-details h2 {
+    margin-bottom: 30px;
+    font-size: 1.2rem;
+    color: black;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+    gap: 10px;
+}
+
+.contact-item input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f7f7f7;
+    font-size: 1rem;
+    color: black;
+}
+
+.copy-btn {
+    background-color: #ffc107;
+    border: none;
+    padding: 8px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 1rem;
+    color: black;
+    transition: background-color 0.3s ease;
+}
+
+.copy-btn:hover {
+    background-color: #e0a800;
+}
+
+/* Feedback Form Section */
+.feedback-form {
+    margin-top: 5px;
+    flex: 1;
+}
+
+.feedback-form h2 {
+    margin-bottom: 20px;
+    font-size: 2rem;
+    color: black;
+}
+
+.form-group {
+    margin-bottom: 10px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 1rem;
+    color: black;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    color: black;
+}
+
+.form-group textarea {
+    resize: none;
+    height: 250px;
+}
+
+.send-btn {
+    background-color: #ffc107;
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.send-btn:hover {
+    background-color: #e0a800;
+}
+.event-list {
+    margin-top: 25px;
+    margin-bottom: 1px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 70px; /* Space between cards */
+    justify-content: center; /* Center the cards horizontally */
+}
+
+.event-card {
+    border: 1px solid #ccc;
+    border-radius: 30px;
+    padding: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 250px; /* Fixed width */
+    height: 250px; /* Fixed height for equal-sized cards */
+    display: flex;
+    flex-direction: column; /* Arrange content vertically */
+    justify-content: space-between; /* Space out content */
+    background-color: #fff;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); /* Stronger shadow */
+}
+
+.event-card h3 {
+    margin-top: 20px;
+    min-height: 5px; /* Ensures all titles take up the same height */
+    margin-bottom: 30px;
+    font-size: 1.5rem; /* Adjust to make the title smaller */
+    font-weight: bold;
+    line-height: 1.3;
+}
+
+.event-card img {
+    border-radius: 15px;
+    margin: 0 auto 4px auto; /* Center the image and add space below */
+    object-fit: cover; /* Makes sure the image is always proportionate */
+    width: 100%;
+    height: 200px; /* Fixed height for all images */
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.event-card p {
+    margin: 20px 0;
+}
+
+.search-filter {
+    display: flex;
+    justify-content: flex-end; /* Align to the right */
+    align-items: center;
+}
+
+.search-filter input {
+    padding: 10px 15px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    outline: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    width: 250px; /* Adjust width */
+}
+
+.search-filter button {
+    background-color: #ffc107;
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Shadow for button */
+}
+
+.search-filter button:hover {
+    background-color: #e0a800; /* Slightly darker yellow */
+}
+
+/* Title Text */
+.event-header h2 {
+    margin: 0; /* Remove default margin */
+    padding: 10px 20px; /* Add some horizontal and vertical spacing */
+    font-size: 2rem;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.profile-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
+.profile-actions {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.action-btn {
+    background-color: #f4c542;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.profile-info {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.profile-label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.profile-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    color: #333;
+    font-size: 14px;
+}
+
+.profile-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.edit-btn,
+.logout-btn {
+    background-color: #f4c542;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.logout-btn {
+    background-color: #f54242;
+    color: white;
+}

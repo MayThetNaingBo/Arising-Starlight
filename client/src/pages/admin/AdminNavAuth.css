@@ -1,0 +1,296 @@
+.admin-navbar {
+    background-color: #f7b500; /* Background color */
+    display: flex;
+    justify-content: center; /* Center the main menu items */
+    align-items: center;
+    padding: 10px 20px; /* Add padding for spacing */
+    position: relative; /* Allows absolute positioning of Notifications */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 80px; /* Spacing between menu items */
+    margin: 0;
+    padding: 0;
+}
+
+.nav-item {
+    text-align: center;
+}
+
+.nav-item .nav-link {
+    color: black; /* Icon and text color */
+    text-decoration: none;
+    font-size: 14px; /* Font size for the text */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px; /* Space between the icon and text */
+    transition: transform 0.2s, color 0.2s;
+}
+
+.nav-item .nav-link i {
+    font-size: 20px; /* Icon size */
+}
+
+.nav-item .nav-link:hover {
+    color: #333; /* Change color on hover */
+    transform: scale(1.1); /* Slight zoom effect */
+}
+
+/* Notifications positioned to the right */
+.notifications-item {
+    position: absolute;
+    right: 40px; /* Adjust distance from the right edge */
+    top: 50%;
+    transform: translateY(-50%); /* Center vertically */
+}
+.event-list {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px; /* Space between cards */
+    justify-content: center; /* Center the cards horizontally */
+}
+
+/* Event Cards */
+.event-card {
+    border: 1px solid #ccc;
+    border-radius: 30px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 350px; /* Fixed width */
+    height: 450px; /* Fixed height for equal-sized cards */
+    display: flex;
+    flex-direction: column; /* Arrange content vertically */
+    justify-content: space-between; /* Space out content */
+    background-color: #fff;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); /* Stronger shadow */
+}
+
+.event-card h3 {
+    margin-top: 5px; /* Remove extra margin from the top */
+    margin-bottom: 5px; /* Add space between the title and the image */
+    font-size: 1.5rem;
+    font-weight: bold;
+    line-height: 1.3;
+    text-align: center; /* Ensure the title is centered */
+}
+
+.event-card img {
+    margin-bottom: 5px;
+    border-radius: 15px;
+    object-fit: cover;
+    width: 100%;
+    height: 200px;
+}
+
+.event-info p {
+    margin: 5px 0; /* Reduce the margin around the paragraphs */
+    line-height: 1; /* Adjust line height for better spacing */
+}
+
+.event-card p {
+    margin: 25px 0;
+}
+.event-header h2 {
+    /* Remove default margin */
+    padding: 0px 5px; /* Add some horizontal and vertical spacing */
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+/* Search Bar Container */
+.search-bar {
+    display: flex;
+    justify-content: center; /* Center the search bar */
+    margin: 20px 0; /* Add spacing above and below the search bar */
+}
+
+/* Search Input */
+.search-input {
+    width: 100%; /* Full width within the container */
+    max-width: 1000px; /* Limit the width to keep it clean */
+    padding: 12px 16px; /* Comfortable padding */
+    font-size: 16px; /* Readable font size */
+    border-radius: 10px; /* Rounded corners for a modern look */
+    border: 2px solid #ccc; /* Light border */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for a sleek effect */
+    transition: all 0.3s ease; /* Smooth transition for focus state */
+}
+
+/* Focus State */
+.search-input:focus {
+    outline: none; /* Remove default outline */
+    border-color: #f8b700; /* Highlight border on focus */
+}
+
+/* Placeholder Text */
+.search-input::placeholder {
+    color: #aaa; /* Subtle placeholder color */
+    font-style: italic; /* Slightly italicize placeholder for distinction */
+}
+
+.header {
+    text-align: left; /* Center align the heading */
+    margin-top: 30px; /* Add spacing above the heading */
+    margin-bottom: 20px; /* Ensure spacing below remains consistent */
+    font-size: 2rem; /* Adjust font size if necessary */
+    font-weight: bold; /* Keep the text bold for emphasis */
+}
+
+/* Custom Modal Styles */
+.custom-modal {
+    font-family: Arial, sans-serif;
+}
+
+.custom-modal-header {
+    background-color: #f8b700;
+    border-bottom: 1px solid #f5c6cb;
+}
+
+.custom-modal-title {
+    color: #000000;
+    font-weight: bold;
+}
+
+.custom-modal-body {
+    color: #000000;
+    font-size: 1.2rem;
+    text-align: center;
+    font-weight: bold;
+}
+
+.custom-modal-footer {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.custom-cancel-button {
+    background-color: #f8b700;
+    border-color: #f8b700;
+    color: #ffffff;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+}
+
+.custom-cancel-button:hover {
+    background-color: #e1a706;
+    border-color: #e1a706;
+}
+
+.custom-delete-button {
+    background-color: #dc3545;
+    border-color: #dc3545;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+}
+
+.custom-delete-button:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+}
+
+/* /* Container for Member Auth Page */
+.admin-auth-container {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Auth Box for Member Login */
+.admin-auth-box {
+    background-color: white;
+    padding: 30px 50px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    position: relative;
+    width: 400px;
+    height: 500px;
+    border-radius: 30px;
+    text-align: left;
+}
+
+.admin-auth-box h2 {
+    font-size: 2rem;
+}
+
+
+
+/* Form Styling */
+.admin-auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 50px;
+    margin-top: 50px;
+}
+
+.admin-auth-form input,
+.admin-auth-form select {
+    padding: 10px;
+    font-size: 16px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+}
+
+.admin-auth-form button {
+    padding: 12px;
+    background-color: #f8b700;
+    color: #000;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.admin-auth-form button:hover {
+    background-color: #e0a800;
+}
+
+/* Footer Links */
+
+.password-container {
+    position: relative;
+}
+
+.password-container input {
+    width: 100%;
+    padding-right: 30px; /* Add padding for the eye icon */
+}
+
+.toggle-password {
+    position: absolute;
+    top: 40%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+/* Footer Links */
+.admin-auth-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.admin-auth-footer a {
+    color: #000000;
+    text-decoration: underline;
+}
+
+.admin-auth-footer a:hover {
+    color: #e0a800;
+}

@@ -1,0 +1,101 @@
+/* /* Container for Member Auth Page */
+.member-auth-container {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Auth Box for Member Login */
+.member-auth-box {
+    background-color: white;
+    padding: 30px 50px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    position: relative;
+    width: 400px;
+    height: 500px;
+    border-radius: 30px;
+    text-align: left;
+}
+
+.member-auth-box h2 {
+    font-size: 2rem;
+}
+
+/* .member-auth-form h3 {
+    font-size: 1.5rem;
+    font-weight: bolder;
+    margin-top: 40px;
+    margin-bottom: 50px;
+} */
+
+/* Form Styling */
+.member-auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 50px;
+    margin-top: 50px;
+}
+
+.member-auth-form input,
+.member-auth-form select {
+    padding: 10px;
+    font-size: 16px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+}
+
+.member-auth-form button {
+    padding: 12px;
+    background-color: #f8b700;
+    color: #000;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.member-auth-form button:hover {
+    background-color: #e0a800;
+}
+
+
+/* Footer Links */
+.member-auth-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.member-auth-footer a {
+    color: #000000;
+    text-decoration: underline;
+}
+
+.member-auth-footer a:hover {
+    color: #e0a800;
+}
+.password-container {
+    position: relative;
+}
+
+.password-container input {
+    width: 100%;
+    padding-right: 30px; /* Add padding for the eye icon */
+}
+
+.toggle-password {
+    position: absolute;
+    top: 40%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}

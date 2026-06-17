@@ -1,0 +1,45 @@
+.event-details {
+    display: flex;
+    gap: 40px;
+    align-items: center;
+}
+
+.event-left {
+    flex: 1;
+    text-align: center;
+}
+
+.event-title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.event-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px;
+}
+
+.view-members-btn {
+    font-size: 1rem;
+    padding: 10px 20px;
+    font-weight: bold;
+    margin-top: 10px;
+    display: inline-block;
+}
+
+.event-right {
+    flex: 2;
+}
+
+.event-location,
+.event-date,
+.event-description {
+    margin-top: 50px;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}

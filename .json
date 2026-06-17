@@ -1,0 +1,44 @@
+[
+    {
+        "title": "Captured Moments",
+        "location": "Temasek Poly",
+        "date": "1.11.2023",
+        "image": "/assets/CPM.jpg",
+        "description":"Testing"
+    },
+    {
+        "title": "Fog & Reflection",
+        "location": "Temasek Poly",
+        "date": "2.2.2022",
+        "image": "/assets/F&R.jpg",
+         "description":"Testing"
+    },
+    {
+        "title": "Lights From Horizon",
+        "location": "Auditorium 1, TP",
+        "date": "2.7.2024",
+        "image": "/assets/LFH.jpg",
+         "description":"Testing"
+    },
+    {
+        "title": "Windows of Memories",
+        "location": "Temasek Poly",
+        "date": "4.7.2023",
+        "image": "/assets/WoM.jpg",
+         "description":"Testing"
+    },
+    {
+        "title": "Evening With Shadows",
+        "location": "Temasek Poly",
+        "date": "28.6.2021",
+        "image": "/assets/EWS.jpg",
+         "description":"Testing"
+    },
+    {
+        "title": "Spotlight Chronicles",
+        "location": "Temasek Poly",
+        "date": "7.2.2022",
+        "image": "/assets/SC.jpg",
+         "description":"Testing"
+    }
+]

@@ -1,0 +1,42 @@
+.member-navbar {
+    background-color: #f7b500; /* Background color */
+    display: flex;
+    justify-content: center; /* Center the main menu items */
+    align-items: center;
+    padding: 10px 20px; /* Add padding for spacing */
+    position: relative; /* Allows absolute positioning of Notifications */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 80px; /* Spacing between menu items */
+    margin: 0;
+    padding: 0;
+}
+
+.nav-item {
+    text-align: center;
+}
+
+.nav-item .nav-link {
+    color: black; /* Icon and text color */
+    text-decoration: none;
+    font-size: 14px; /* Font size for the text */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px; /* Space between the icon and text */
+    transition: transform 0.2s, color 0.2s;
+}
+
+.nav-item .nav-link i {
+    font-size: 20px; /* Icon size */
+}
+
+.nav-item .nav-link:hover {
+    color: #333; /* Change color on hover */
+    transform: scale(1.1); /* Slight zoom effect */
+}
+

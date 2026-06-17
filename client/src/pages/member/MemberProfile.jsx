@@ -33,7 +33,7 @@ export default function MemberProfile() {
 
         // Fetch member profile from backend
         axios
-            .get(`http://${import.meta.env.VITE_API_URL}/api/members/${userId}`)
+            .get(`${import.meta.env.VITE_API_URL}/api/members/${userId}`)
             .then((res) => {
                 setProfile({
                     name: res.data.name,
@@ -51,7 +51,7 @@ export default function MemberProfile() {
     const handleChangePassword = async () => {
         try {
             const response = await axios.put(
-                "http://${import.meta.env.VITE_API_URL}/api/member/change-password",
+                "${import.meta.env.VITE_API_URL}/api/member/change-password",
                 {
                     email: profile.email, // Fetch email dynamically
                     currentPassword,

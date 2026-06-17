@@ -8,7 +8,7 @@ export default function EventDetails() {
     const [event, setEvent] = useState(null);
     useEffect(() => {
         // Fetch event details by ID
-        fetch(`http://${import.meta.env.VITE_API_URL}/api/events/${id}`)
+        fetch(`${import.meta.env.VITE_API_URL}/api/events/${id}`)
             .then((res) => res.json())
             .then((data) => setEvent(data))
             .catch((err) => console.error("Error fetching event:", err));

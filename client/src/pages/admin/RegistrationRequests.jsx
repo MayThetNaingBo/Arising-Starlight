@@ -7,7 +7,7 @@ export default function RegistrationRequests() {
     const [requests, setRequests] = useState([]);
 
     useEffect(() => {
-        fetch(`http://${import.meta.env.VITE_API_URL}/api/events/${id}/requests`)
+        fetch(`${import.meta.env.VITE_API_URL}/api/events/${id}/requests`)
             .then((res) => res.json())
             .then((data) => {
                 console.log("Fetched Requests:", data);
@@ -29,7 +29,7 @@ export default function RegistrationRequests() {
 
             // Approve request and add member to the event
             const response = await fetch(
-                `http://${import.meta.env.VITE_API_URL}/api/events/${id}/approve-request`,
+                `${import.meta.env.VITE_API_URL}/api/events/${id}/approve-request`,
                 {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -59,7 +59,7 @@ export default function RegistrationRequests() {
     const handleReject = async (userId) => {
         try {
             const res = await fetch(
-                `http://${import.meta.env.VITE_API_URL}/api/events/${id}/reject-request`, // Changed from DELETE to POST
+                `${import.meta.env.VITE_API_URL}/api/events/${id}/reject-request`, // Changed from DELETE to POST
                 {
                     method: "POST", // Fix HTTP method
                     headers: { "Content-Type": "application/json" },

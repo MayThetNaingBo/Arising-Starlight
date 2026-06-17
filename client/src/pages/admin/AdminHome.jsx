@@ -38,7 +38,7 @@ export default function AdminHome() {
 
     useEffect(() => {
         // Fetch members from API
-        fetch("http://${import.meta.env.VITE_API_URL}/api/members")
+        fetch("${import.meta.env.VITE_API_URL}/api/members")
             .then((res) => res.json())
             .then((data) => setMembers(data))
             .catch((err) => console.error("Error fetching members:", err));
@@ -59,7 +59,7 @@ export default function AdminHome() {
     const confirmDelete = async () => {
         try {
             // Call the delete API
-            const response = await fetch(`http://${import.meta.env.VITE_API_URL}/api/members/${memberToDelete}`, {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/members/${memberToDelete}`, {
                 method: "DELETE",
             });
     

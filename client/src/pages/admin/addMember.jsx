@@ -18,7 +18,7 @@ export default function AdminAddMember() {
         e.preventDefault();
         try {
             const response = await axios.post(
-                "http://${import.meta.env.VITE_API_URL}/api/members/add",
+                "${import.meta.env.VITE_API_URL}/api/members/add",
                 formData,
                 {
                     headers: {

@@ -19,7 +19,7 @@ export default function MemberEventDetails() {
         }
         
 
-        fetch(`http://${import.meta.env.VITE_API_URL}/api/events/${id}`)
+        fetch(`${import.meta.env.VITE_API_URL}/api/events/${id}`)
             .then((res) => res.json())
             .then((data) => {
                 setEvent(data);
@@ -46,7 +46,7 @@ export default function MemberEventDetails() {
         setLoading(true);
         try {
             const response = await fetch(
-                `http://${import.meta.env.VITE_API_URL}/api/events/${id}/register-request`,
+                `${import.meta.env.VITE_API_URL}/api/events/${id}/register-request`,
                 {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },

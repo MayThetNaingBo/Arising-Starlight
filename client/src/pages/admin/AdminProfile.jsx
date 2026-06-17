@@ -30,7 +30,7 @@ export default function AdminProfile() {
 
         try {
             const response = await axios.put(
-                "http://${import.meta.env.VITE_API_URL}/api/admin/change-password",
+                "${import.meta.env.VITE_API_URL}/api/admin/change-password",
                 {
                     email: adminEmail, // Use email from localStorage
                     currentPassword,

@@ -17,7 +17,7 @@ export default function MemberIndividualEvents() {
         }
 
         // Fetch events for the logged-in member
-        fetch(`http://${import.meta.env.VITE_API_URL}/api/members/${userId}/events`)
+        fetch(`${import.meta.env.VITE_API_URL}/api/members/${userId}/events`)
             .then((res) => {
                 if (!res.ok) {
                     throw new Error("Failed to fetch events");

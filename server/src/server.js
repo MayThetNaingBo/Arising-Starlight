@@ -19,8 +19,9 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://your-vercel-url.vercel.app",
+      "https://arising-starlight.vercel.app",
     ],
+    methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
 );

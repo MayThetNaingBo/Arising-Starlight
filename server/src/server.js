@@ -15,7 +15,15 @@ console.log("PASSWORD:", process.env.EMAIL_PASSWORD);
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://your-vercel-url.vercel.app",
+    ],
+    credentials: true,
+  })
+);
 app.use(express.json());
 
 // Firebase Admin SDK
@@ -191,7 +199,7 @@ app.post("/api/members/add", async (req, res) => {
 
         await newMember.save();
 
-        const link = `http://${import.meta.env.VITE_API_URL}/create-password?token=${token}`;
+        const link = `${process.env.FRONTEND_URL}/create-password?token=${token}`;
         const mailOptions = {
             from: process.env.EMAIL,
             to: normalizedEmail,

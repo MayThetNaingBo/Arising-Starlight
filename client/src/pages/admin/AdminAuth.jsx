@@ -24,7 +24,7 @@ const AdminSignIn = () => {
         try {
             // Send the credentials to the backend for authentication
             const response = await axios.post(
-                "${import.meta.env.VITE_API_URL}/api/admin/signin",
+                `${import.meta.env.VITE_API_URL}/api/admin/signin`,
                 formData
             );
 

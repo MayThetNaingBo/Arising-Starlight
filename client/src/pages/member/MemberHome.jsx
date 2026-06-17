@@ -20,7 +20,7 @@ export default function MemberHome() {
 
     useEffect(() => {
         // Fetch members from API
-        fetch("${import.meta.env.VITE_API_URL}/api/members")
+        fetch(`${import.meta.env.VITE_API_URL}/api/members`)
             .then((res) => res.json())
             .then((data) => setMembers(data))
             .catch((err) => console.error("Error fetching members:", err));

@@ -56,7 +56,7 @@ export default function CreatePassword() {
     
         try {
             const response = await axios.post(
-                "${import.meta.env.VITE_API_URL}/api/create-password",
+                `${import.meta.env.VITE_API_URL}/api/create-password`,
                 {
                     token,
                     password,

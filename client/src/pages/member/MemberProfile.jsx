@@ -51,7 +51,7 @@ export default function MemberProfile() {
     const handleChangePassword = async () => {
         try {
             const response = await axios.put(
-                "${import.meta.env.VITE_API_URL}/api/member/change-password",
+                `${import.meta.env.VITE_API_URL}/api/member/change-password`,
                 {
                     email: profile.email, // Fetch email dynamically
                     currentPassword,

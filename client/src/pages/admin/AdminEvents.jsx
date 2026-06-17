@@ -11,7 +11,7 @@ export default function EventList() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch("${import.meta.env.VITE_API_URL}/api/events")
+        fetch(`${import.meta.env.VITE_API_URL}/api/events`)
             .then((res) => res.json())
             .then((data) => setEvents(data))
             .catch((err) => console.error("Error fetching events:", err));

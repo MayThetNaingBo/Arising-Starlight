@@ -6,7 +6,7 @@ export default function EventList() {
 
     useEffect(() => {
         // Fetch event data from API
-        fetch("${import.meta.env.VITE_API_URL}/api/events")
+        fetch(`${import.meta.env.VITE_API_URL}/api/events`)
             .then((res) => res.json())
             .then((data) => setEvents(data))
             .catch((err) => console.error("Error fetching events:", err));

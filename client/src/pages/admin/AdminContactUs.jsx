@@ -5,7 +5,7 @@ export default function FeedbackAdmin() {
 
     // Fetch feedbacks on component load
     useEffect(() => {
-        fetch("${import.meta.env.VITE_API_URL}/api/feedback") // Backend endpoint
+        fetch(`${import.meta.env.VITE_API_URL}/api/feedback`) // Backend endpoint
             .then((res) => res.json())
             .then((data) => {
                 console.log("Feedback Data:", data); // Debugging

@@ -12,7 +12,7 @@ export default function MemberContactUs() {
 
         try {
             const response = await axios.post(
-                "${import.meta.env.VITE_API_URL}/api/feedback",
+                `${import.meta.env.VITE_API_URL}/api/feedback`,
                 { email, message: feedback }
             );
 

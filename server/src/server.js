@@ -26,7 +26,7 @@ app.use(
 );
 app.use(express.json());
 
-// Firebase Admin SDK
+// Firebase Admin SDK. 
 admin.initializeApp({
     credential: admin.credential.cert({
         projectId: process.env.FIREBASE_PROJECT_ID,

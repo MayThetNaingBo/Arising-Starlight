@@ -100,7 +100,7 @@ export default function EventList() {
                                 </p>
                             </div>
                         </div>
-                        <div className="event-actions text-center mt-2">
+                        <div className="event-actions">
                             <button
                                 className="btn btn-warning"
                                 onClick={() => handleUpdate(event._id)}

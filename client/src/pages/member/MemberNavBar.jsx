@@ -56,7 +56,7 @@ export default function MemberNavBar() {
 
             {/* Notifications icon */}
             <div className="notifications-item">
-                <Link to="/member/notifications" className="nav-link">
+                <Link to="" className="nav-link">
                     <i className="fas fa-bell"></i>
                 </Link>
             </div>

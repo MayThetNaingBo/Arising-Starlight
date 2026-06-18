@@ -36,13 +36,26 @@ export default function AdminHome() {
     const [showModal, setShowModal] = useState(false);
     const [memberToDelete, setMemberToDelete] = useState(null);
 
-    useEffect(() => {
-        // Fetch members from API
-        fetch(`${import.meta.env.VITE_API_URL}/api/members`)
-            .then((res) => res.json())
-            .then((data) => setMembers(data))
-            .catch((err) => console.error("Error fetching members:", err));
-    }, []);
+   useEffect(() => {
+  const fetchMembers = async () => {
+    try {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/members`);
+      const data = await res.json();
+
+      console.log("Fetched members:", data);
+
+      if (Array.isArray(data)) {
+        setMembers(data);
+      } else {
+        setMembers([]);
+      }
+    } catch (err) {
+      console.error("Error fetching members:", err);
+    }
+  };
+
+  fetchMembers();
+}, []);
 
     // Handle search input
     const handleSearch = (e) => {
@@ -101,7 +114,7 @@ export default function AdminHome() {
                 <input
                     type="text"
                     className="search-input"
-                    placeholder="Search events by title"
+                    placeholder="Search members by title"
                     value={searchTerm}
                     onChange={handleSearch}
                 />

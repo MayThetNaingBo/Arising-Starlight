@@ -39,24 +39,21 @@ export default function AdminHome() {
    useEffect(() => {
   const fetchMembers = async () => {
     try {
+      setLoading(true);
+
       const res = await fetch(`${import.meta.env.VITE_API_URL}/api/members`);
       const data = await res.json();
 
-      console.log("Fetched members:", data);
-
-      if (Array.isArray(data)) {
-        setMembers(data);
-      } else {
-        setMembers([]);
-      }
+      setMembers(Array.isArray(data) ? data : []);
     } catch (err) {
       console.error("Error fetching members:", err);
+    } finally {
+      setLoading(false);
     }
   };
 
   fetchMembers();
 }, []);
-
     // Handle search input
     const handleSearch = (e) => {
         setSearchTerm(e.target.value);
@@ -139,12 +136,15 @@ export default function AdminHome() {
                 </tbody>
             </table>
 
-            {filteredMembers.length === 0 && (
-                <div className="text-center mt-3">
-                    <p>No members found matching your search criteria.</p>
-                </div>
-            )}
-
+           {loading ? (
+  <div className="text-center mt-3">
+    <p>Loading members...</p>
+  </div>
+) : filteredMembers.length === 0 ? (
+  <div className="text-center mt-3">
+    <p>No members found matching your search criteria.</p>
+  </div>
+) : null}
             {/* Delete Confirmation Modal */}
             <Modal
                 show={showModal}

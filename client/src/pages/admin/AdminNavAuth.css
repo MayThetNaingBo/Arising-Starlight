@@ -295,18 +295,16 @@
     color: #e0a800;
 }
 .event-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 260px));
-  gap: 28px;
-  justify-content: center;
-  align-items: stretch;
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 300px)) !important;
+  gap: 36px !important;
+  justify-content: center !important;
+  align-items: stretch !important;
 }
 
 .event-card {
-  height: 560px !important;
-  padding-bottom: 24px !important;
+  width: 300px !important;
 }
-
 .event-card > div:first-child {
   flex: 1;
 }

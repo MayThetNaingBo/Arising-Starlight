@@ -115,20 +115,7 @@ export default function EditMember() {
                     </select>
                 </div>
 
-                <div className="mb-3">
-                    <label htmlFor="email" className="form-label">
-                        TP Email
-                    </label>
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        className="form-control"
-                        value={member.email}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
+               
                 <button type="submit" className="btn btn-warning mt-3">
                     Update 
                 </button>

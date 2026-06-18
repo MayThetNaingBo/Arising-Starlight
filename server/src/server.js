@@ -90,13 +90,13 @@ const Member = mongoose.model("Member", memberSchema);
 
 // Email Transporter Setup
 const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-        user: process.env.EMAIL,
-        pass: process.env.EMAIL_PASSWORD,
-    },
-    logger: true, // Enable detailed logs
-    debug: true, // Debug SMTP communication
+  host: "smtp.gmail.com",
+  port: 465,
+  secure: true,
+  auth: {
+    user: process.env.EMAIL,
+    pass: process.env.EMAIL_PASSWORD,
+  },
 });
 
 // ADMIN ROUTES

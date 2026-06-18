@@ -37,7 +37,7 @@ export default function AdminHome() {
     const [memberToDelete, setMemberToDelete] = useState(null);
     const [loading, setLoading] = useState(true);
 
-   useEffect(() => {
+ useEffect(() => {
   const fetchMembers = async () => {
     try {
       setLoading(true);
@@ -48,6 +48,8 @@ export default function AdminHome() {
       setMembers(Array.isArray(data) ? data : []);
     } catch (err) {
       console.error("Error fetching members:", err);
+
+      setTimeout(fetchMembers, 3000);
     } finally {
       setLoading(false);
     }
@@ -139,7 +141,7 @@ export default function AdminHome() {
 
            {loading ? (
   <div className="text-center mt-3">
-    <p>Loading members...</p>
+    <p>Loading members... Please wait while the server wakes up and refreshes.</p>
   </div>
 ) : filteredMembers.length === 0 ? (
   <div className="text-center mt-3">

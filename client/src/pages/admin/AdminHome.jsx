@@ -35,6 +35,7 @@ export default function AdminHome() {
     const [searchTerm, setSearchTerm] = useState("");
     const [showModal, setShowModal] = useState(false);
     const [memberToDelete, setMemberToDelete] = useState(null);
+    const [loading, setLoading] = useState(true);
 
    useEffect(() => {
   const fetchMembers = async () => {

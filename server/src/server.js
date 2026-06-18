@@ -208,19 +208,18 @@ app.post("/api/members/add", async (req, res) => {
             html: `<p>Click <a href="${link}">here</a> to set your password.</p>`,
         };
 
-        res.status(201).json({
+res.status(201).json({
   message: "Member added successfully.",
 });
 
-transporter.sendMail(mailOptions).catch((error) => {
-  console.error("Failed to send email:", error);
-});res.status(201).json({
-  message: "Member added successfully.",
-});
-
-transporter.sendMail(mailOptions).catch((error) => {
-  console.error("Failed to send email:", error);
-});
+transporter
+  .sendMail(mailOptions)
+  .then(() => {
+    console.log("Password setup email sent to:", normalizedEmail);
+  })
+  .catch((error) => {
+    console.error("Failed to send email:", error.message);
+  });
     } catch (error) {
         res.status(500).json({
             message: "Failed to add member.",

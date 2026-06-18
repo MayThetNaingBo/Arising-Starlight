@@ -9,7 +9,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 console.log("EMAIL:", process.env.EMAIL);
-console.log("PASSWORD:", process.env.EMAIL_PASSWORD);
+
 
 // Initialize App
 const app = express();
@@ -93,12 +93,14 @@ const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
   port: 465,
   secure: true,
+  connectionTimeout: 30000,
+  greetingTimeout: 30000,
+  socketTimeout: 30000,
   auth: {
     user: process.env.EMAIL,
     pass: process.env.EMAIL_PASSWORD,
   },
 });
-
 // ADMIN ROUTES
 
 // Admin Signup

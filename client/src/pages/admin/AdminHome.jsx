@@ -36,20 +36,25 @@ export default function AdminHome() {
     const [showModal, setShowModal] = useState(false);
     const [memberToDelete, setMemberToDelete] = useState(null);
     const [loading, setLoading] = useState(true);
+const [error, setError] = useState("");
 
- useEffect(() => {
+useEffect(() => {
   const fetchMembers = async () => {
+    setLoading(true);
+    setError("");
+
     try {
-      setLoading(true);
-
       const res = await fetch(`${import.meta.env.VITE_API_URL}/api/members`);
-      const data = await res.json();
 
+      if (!res.ok) {
+        throw new Error("Failed to fetch members");
+      }
+
+      const data = await res.json();
       setMembers(Array.isArray(data) ? data : []);
     } catch (err) {
       console.error("Error fetching members:", err);
-
-      setTimeout(fetchMembers, 3000);
+      setError("Unable to load members. Please refresh again.");
     } finally {
       setLoading(false);
     }
@@ -139,9 +144,13 @@ export default function AdminHome() {
                 </tbody>
             </table>
 
-           {loading ? (
+   {loading ? (
   <div className="text-center mt-3">
-    <p>Loading members... Please wait while the server wakes up and refreshes.</p>
+    <p>Loading members... Please wait while the server wakes up.</p>
+  </div>
+) : error ? (
+  <div className="text-center mt-3 text-danger">
+    <p>{error}</p>
   </div>
 ) : filteredMembers.length === 0 ? (
   <div className="text-center mt-3">

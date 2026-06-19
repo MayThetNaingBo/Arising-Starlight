@@ -51,7 +51,7 @@ const routes = [
             { path: "/contactus", element: <ContactUs /> },
             { path: "/members", element: <Public_Members /> },
             { path: "/events", element: <Public_Events /> },
-            { path:"/notifications", element:<Notifications />},
+            
         ],
     },
     { path: "/authentication", element: <Authentication /> },
@@ -68,6 +68,7 @@ const routes = [
             { path: "/member/contactus", element: <MemberContactUs /> },
             { path: "/member/event/:id", element: <MemberEventDetails /> },
             { path: "/member/individual/events", element: <MemberIndividualEvents /> },
+            { path: "/member/notifications", element: <Notifications /> },
         ],
     },
     {
@@ -90,6 +91,7 @@ const routes = [
             { path: "/admin/event/:id/members", element: <EventMembers /> }, // View members for the event
             { path: "/admin/event/:id/select-members", element:<SelectMembers />}, // Add members to the event
             { path: "/admin/event/:id/requests", element: <RegistrationRequests /> },
+             { path: "/admin/notifications", element: <Notifications /> },
 
         ],
     },

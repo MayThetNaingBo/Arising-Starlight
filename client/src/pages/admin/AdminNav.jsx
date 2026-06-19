@@ -63,7 +63,7 @@ export default function AdminNavBar() {
 
             {/* Notifications icon */}
             <div className="notifications-item">
-                <Link to="/notifications" className="nav-link">
+                <Link to="/admin/notifications" className="nav-link">
                     <i className="fas fa-bell"></i>
                 </Link>
             </div>

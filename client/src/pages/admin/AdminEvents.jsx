@@ -51,7 +51,7 @@ export default function EventList() {
     return (
         <div className="container mt-4">
             <div className="d-flex justify-content-between align-items-center mb-4">
-                <h3>CCA Event List ( Admin View ) </h3>
+                <h3>CCA Event List ( Admin ) </h3>
                 <button
                     className="btn btn-warning"
                     onClick={() => navigate("/admin/add/event")}

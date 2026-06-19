@@ -107,7 +107,7 @@ useEffect(() => {
     return (
         <div className="container mt-4">
             <div className="d-flex justify-content-between align-items-center mb-4">
-                <h3>CCA Member List ( Admin View )</h3>
+                <h3>CCA Member List ( Admin )</h3>
                 <button
                     className="btn btn-warning"
                     onClick={() => (window.location.href = "/admin/add")}

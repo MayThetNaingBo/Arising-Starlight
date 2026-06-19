@@ -352,25 +352,73 @@ app.post("/api/member/signin", async (req, res) => {
 });
 
 app.put("/api/members/:id", async (req, res) => {
-    const { id } = req.params;
-    const { name, school } = req.body; // Accept only name and school
+  const { id } = req.params;
+  const { name, school, email } = req.body;
 
-    try {
-        const updatedMember = await Member.findByIdAndUpdate(
-            id,
-            { name, school }, // Only update these fields
-            { new: true } // Return the updated document
-        );
+  try {
+    const member = await Member.findById(id);
 
-        if (!updatedMember) {
-            return res.status(404).json({ message: "Member not found" });
-        }
-
-        res.status(200).json({ message: "Member updated successfully!" });
-    } catch (error) {
-        console.error("Error updating member:", error);
-        res.status(500).json({ message: "Failed to update member." });
+    if (!member) {
+      return res.status(404).json({ message: "Member not found" });
     }
+
+    const normalizedEmail = email.toLowerCase().trim();
+    const emailChanged = member.email !== normalizedEmail;
+
+    if (emailChanged) {
+      const existingMember = await Member.findOne({
+        email: normalizedEmail,
+        _id: { $ne: id },
+      });
+
+      if (existingMember) {
+        return res.status(400).json({
+          message: "Another member already uses this email.",
+        });
+      }
+
+      const token = crypto.randomBytes(32).toString("hex");
+      const tokenExpiry = new Date();
+      tokenExpiry.setHours(tokenExpiry.getHours() + 24);
+
+      member.email = normalizedEmail;
+      member.password = undefined;
+      member.isVerified = false;
+      member.verificationToken = token;
+      member.tokenExpiry = tokenExpiry;
+
+      const link = `${process.env.FRONTEND_URL}/create-password?token=${token}`;
+
+      await resend.emails.send({
+        from: "Arising Starlight <noreply@yhwinfo.xyz>",
+        to: normalizedEmail,
+        subject: "CCA Password Setup",
+        html: `
+          <h2>Welcome to Arising Starlight</h2>
+          <p>Your email was updated by the admin.</p>
+          <p>Please click the link below to create your password:</p>
+          <a href="${link}">Create Password</a>
+        `,
+      });
+    }
+
+    member.name = name;
+    member.school = school;
+
+    await member.save();
+
+    res.status(200).json({
+      message: emailChanged
+        ? "Member updated successfully. Password setup email sent to the new email."
+        : "Member updated successfully.",
+    });
+  } catch (error) {
+    console.error("Error updating member:", error);
+    res.status(500).json({
+      message: "Failed to update member.",
+      error: error.message,
+    });
+  }
 });
 // Get Member by ID
 app.get("/api/members/:id", async (req, res) => {

@@ -3,14 +3,13 @@ import mongoose from "mongoose";
 import cors from "cors";
 import admin from "firebase-admin";
 import bcrypt from "bcrypt";
-import nodemailer from "nodemailer";
 import crypto from "crypto";
+import { Resend } from "resend";
 import dotenv from "dotenv";
 dotenv.config();
 
-console.log("EMAIL:", process.env.EMAIL);
 
-
+const resend = new Resend(process.env.RESEND_API_KEY);
 // Initialize App
 const app = express();
 
@@ -88,19 +87,6 @@ const Event = mongoose.model("Event", eventSchema);
 const Admin = mongoose.model("Admin", adminSchema);
 const Member = mongoose.model("Member", memberSchema);
 
-// Email Transporter Setup
-const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 465,
-  secure: true,
-  connectionTimeout: 30000,
-  greetingTimeout: 30000,
-  socketTimeout: 30000,
-  auth: {
-    user: process.env.EMAIL,
-    pass: process.env.EMAIL_PASSWORD,
-  },
-});
 // ADMIN ROUTES
 
 // Admin Signup
@@ -200,28 +186,24 @@ app.post("/api/members/add", async (req, res) => {
             isVerified: false,
         });
 
-        await newMember.save();
+     await newMember.save();
 
-        const link = `${process.env.FRONTEND_URL}/create-password?token=${token}`;
-        const mailOptions = {
-            from: process.env.EMAIL,
-            to: normalizedEmail,
-            subject: "CCA Password Setup",
-            html: `<p>Click <a href="${link}">here</a> to set your password.</p>`,
-        };
+const link = `${process.env.FRONTEND_URL}/create-password?token=${token}`;
 
-res.status(201).json({
-  message: "Member added successfully.",
+await resend.emails.send({
+   from: "Arising Starlight <noreply@yhwinfo.xyz>",
+  to: normalizedEmail,
+  subject: "CCA Password Setup",
+  html: `
+    <h2>Welcome to TPISG</h2>
+    <p>Click the link below to create your password:</p>
+    <a href="${link}">Create Password</a>
+  `,
 });
 
-transporter
-  .sendMail(mailOptions)
-  .then(() => {
-    console.log("Password setup email sent to:", normalizedEmail);
-  })
-  .catch((error) => {
-    console.error("Failed to send email:", error.message);
-  });
+res.status(201).json({
+  message: "Member added successfully. Password setup email sent.",
+});
     } catch (error) {
         res.status(500).json({
             message: "Failed to add member.",
@@ -229,7 +211,6 @@ transporter
         });
     }
 });
-
 // Get All Members
 app.get("/api/members", async (req, res) => {
     try {
@@ -522,23 +503,6 @@ app.put("/api/events/:id", async (req, res) => {
         });
     }
 });
-
-
-// app.get("/test-email", async (req, res) => {
-//     try {
-//         const mailOptions = {
-//             from: process.env.EMAIL,
-//             to: "your-test-email@gmail.com",
-//             subject: "Test Email",
-//             text: "This is a test email from CCA system.",
-//         };
-//         await transporter.sendMail(mailOptions);
-//         res.send("Test email sent successfully!");
-//     } catch (error) {
-//         console.error("Error sending email:", error);
-//         res.status(500).send("Failed to send email.");
-//     }
-// });
 
 app.get("/api/events/:id/members", async (req, res) => {
     const { id } = req.params;

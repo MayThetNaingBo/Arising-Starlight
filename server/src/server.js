@@ -671,6 +671,7 @@ app.post("/api/events/:id/register-request", async (req, res) => {
         await event.save();
 await Notification.create({
   recipientRole: "admin",
+  eventId: event._id,
   message: `A member requested to join ${event.title}.`,
   type: "REGISTRATION_REQUEST",
 });

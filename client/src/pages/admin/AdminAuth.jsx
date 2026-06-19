@@ -104,8 +104,7 @@ const AdminSignIn = () => {
                 </form>
                 <div className="admin-auth-footer">
                     <a href="/" className="sign-in-admin-link">
-                        Forgot Password ?
-                    </a>
+                        Go Back To Home                 </a>
                     <a href="/memberAuth" className="sign-in-admin-link">
                         Sign In As Member
                     </a>

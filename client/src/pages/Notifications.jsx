@@ -34,7 +34,23 @@ export default function Notifications() {
       navigate(`/admin/event/${notification.eventId}/requests`);
       return;
     }
+if (notification.type === "FEEDBACK_MESSAGE") {
+  await fetch(
+    `${import.meta.env.VITE_API_URL}/api/notifications/${notification._id}/read`,
+    { method: "PUT" }
+  );
 
+  setNotifications((prev) =>
+    prev.map((item) =>
+      item._id === notification._id ? { ...item, isRead: true } : item
+    )
+  );
+
+  window.dispatchEvent(new Event("notificationRead"));
+
+  navigate("/admin/contactus");
+  return;
+}
     // Member notifications: mark as read when clicked
     if (
       notification.type === "REGISTRATION_APPROVED" ||

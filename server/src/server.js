@@ -19,6 +19,10 @@ const notificationSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Event",
   },
+  feedbackId: {
+  type: mongoose.Schema.Types.ObjectId,
+  ref: "Feedback",
+},
   message: String,
   type: String,
   isRead: {
@@ -1032,6 +1036,12 @@ app.post("/api/feedback", async (req, res) => {
     try {
         const newFeedback = new Feedback({ email, message });
         await newFeedback.save();
+        await Notification.create({
+  recipientRole: "admin",
+  feedbackId: newFeedback._id,
+  message: `New feedback message from ${email}.`,
+  type: "FEEDBACK_MESSAGE",
+});
 
         res.status(201).json({
             message: "Feedback submitted successfully!",

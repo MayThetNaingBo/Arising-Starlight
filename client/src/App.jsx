@@ -51,7 +51,7 @@ const routes = [
             { path: "/contactus", element: <ContactUs /> },
             { path: "/members", element: <Public_Members /> },
             { path: "/events", element: <Public_Events /> },
-            { path="/notifications", element:<Notifications />},
+            { path:"/notifications", element:<Notifications />},
         ],
     },
     { path: "/authentication", element: <Authentication /> },

@@ -979,7 +979,18 @@ app.get("/api/feedback", async (req, res) => {
         });
     }
 });
+app.get("/api/notifications/unread-count", async (req, res) => {
+  const { role, userId } = req.query;
 
+  const query =
+    role === "admin"
+      ? { recipientRole: "admin", isRead: false }
+      : { recipientRole: "member", recipientId: userId, isRead: false };
+
+  const count = await Notification.countDocuments(query);
+
+  res.json({ count });
+});
 // Test Route
 app.get("/hello", (req, res) => res.send("Hello"));
 

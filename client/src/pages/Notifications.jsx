@@ -1,0 +1,59 @@
+// Notifications.jsx
+import React, { useEffect, useState } from "react";
+
+export default function Notifications() {
+  const [notifications, setNotifications] = useState([]);
+  const role = localStorage.getItem("role");
+  const userId = localStorage.getItem("userId");
+
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      try {
+        const url =
+          role === "admin"
+            ? `${import.meta.env.VITE_API_URL}/api/notifications/admin`
+            : `${import.meta.env.VITE_API_URL}/api/notifications/member/${userId}`;
+
+        const res = await fetch(url);
+        const data = await res.json();
+
+        setNotifications(Array.isArray(data) ? data : []);
+      } catch (error) {
+        console.error("Failed to fetch notifications:", error);
+      }
+    };
+
+    fetchNotifications();
+  }, [role, userId]);
+
+  return (
+    <div className="container mt-4">
+      <h3>Notifications</h3>
+
+      {notifications.length === 0 ? (
+        <p className="mt-4 text-center">No notifications yet.</p>
+      ) : (
+        <div className="mt-4">
+          {notifications.map((notification) => (
+            <div
+              key={notification._id}
+              className="card mb-3 shadow-sm"
+              style={{
+                borderLeft: notification.isRead
+                  ? "5px solid #ccc"
+                  : "5px solid #f7b500",
+              }}
+            >
+              <div className="card-body">
+                <p className="mb-1">{notification.message}</p>
+                <small className="text-muted">
+                  {new Date(notification.createdAt).toLocaleString()}
+                </small>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}

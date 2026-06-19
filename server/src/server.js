@@ -10,6 +10,18 @@ dotenv.config();
 
 
 const resend = new Resend(process.env.RESEND_API_KEY);
+
+const notificationSchema = new mongoose.Schema({
+  recipientRole: { type: String, enum: ["admin", "member"], required: true },
+  recipientId: { type: mongoose.Schema.Types.ObjectId, refPath: "recipientModel" },
+  recipientModel: { type: String, enum: ["Admin", "Member"] },
+  message: { type: String, required: true },
+  type: { type: String },
+  isRead: { type: Boolean, default: false },
+  createdAt: { type: Date, default: Date.now },
+});
+
+const Notification = mongoose.model("Notification", notificationSchema);
 // Initialize App
 const app = express();
 
@@ -580,6 +592,31 @@ app.post("/api/events/:id/remove-member", async (req, res) => {
         res.status(500).json({ error: "Server error" });
     }
 });
+app.get("/api/notifications/admin", async (req, res) => {
+  const notifications = await Notification.find({ recipientRole: "admin" })
+    .sort({ createdAt: -1 });
+
+  res.json(notifications);
+});
+
+app.get("/api/notifications/member/:memberId", async (req, res) => {
+  const notifications = await Notification.find({
+    recipientRole: "member",
+    recipientId: req.params.memberId,
+  }).sort({ createdAt: -1 });
+
+  res.json(notifications);
+});
+
+app.put("/api/notifications/:id/read", async (req, res) => {
+  const notification = await Notification.findByIdAndUpdate(
+    req.params.id,
+    { isRead: true },
+    { new: true }
+  );
+
+  res.json(notification);
+});
 
 app.post("/api/events/:id/add-member", async (req, res) => {
     const { id } = req.params;
@@ -588,6 +625,13 @@ app.post("/api/events/:id/add-member", async (req, res) => {
         const event = await Event.findById(id);
         event.members.push(memberId);
         await event.save();
+        await Notification.create({
+  recipientRole: "member",
+  recipientId: memberId,
+  recipientModel: "Member",
+  message: `You have been assigned to ${event.title}.`,
+  type: "EVENT_ASSIGNED",
+});
         res.json({ success: true });
     } catch (err) {
         console.error(err);
@@ -622,11 +666,14 @@ app.post("/api/events/:id/register-request", async (req, res) => {
                 .status(400)
                 .json({ error: "Already registered or requested." });
         }
-
-        // Add the userId to registrationRequests
+   // Add the userId to registrationRequests
         event.registrationRequests.push(userId);
         await event.save();
-
+await Notification.create({
+  recipientRole: "admin",
+  message: `A member requested to join ${event.title}.`,
+  type: "REGISTRATION_REQUEST",
+});
         console.log("Updated Requests:", event.registrationRequests); // Debugging
 
         res.json({ success: true, message: "Registration request sent." });
@@ -676,55 +723,18 @@ app.post("/api/events/:id/approve-request", async (req, res) => {
         if (!event.members.includes(memberId)) {
             event.members.push(memberId); // Add to members
         }
-
         // Remove from registration requests
         event.registrationRequests.pull(memberId);
 
         // Save the updated event
         await event.save();
-
-        console.log("Approval Successful:", event);
-        res.json({
-            success: true,
-            message: "Member approved and added to event.",
-        });
-    } catch (err) {
-        console.error("Approval Error:", err);
-        res.status(500).json({ error: "Server error" });
-    }
+await Notification.create({
+  recipientRole: "member",
+  recipientId: memberId,
+  recipientModel: "Member",
+  message: `Your registration for ${event.title} has been approved.`,
+  type: "REGISTRATION_APPROVED",
 });
-
-app.post("/api/events/:id/approve-request", async (req, res) => {
-    const { userId } = req.body;
-
-    try {
-        console.log("Approving request:", { eventId: req.params.id, userId });
-
-        // Validate IDs
-        if (
-            !mongoose.Types.ObjectId.isValid(req.params.id) ||
-            !mongoose.Types.ObjectId.isValid(userId)
-        ) {
-            return res.status(400).json({ error: "Invalid ID format." });
-        }
-
-        // Fetch the event
-        const event = await Event.findById(req.params.id);
-        if (!event) {
-            return res.status(404).json({ error: "Event not found." });
-        }
-
-        const memberId = new mongoose.Types.ObjectId(userId);
-
-        // Remove from registration requests
-        event.registrationRequests.pull(memberId);
-
-        // Add to members list (even if already present, it avoids duplicates)
-        event.members.addToSet(memberId); // `addToSet` prevents duplicates
-
-        // Save updated event
-        await event.save();
-
         console.log("Approval Successful:", event);
         res.json({
             success: true,
@@ -748,7 +758,13 @@ app.post("/api/events/:id/reject-request", async (req, res) => {
             (id) => id.toString() !== userId
         );
         await event.save();
-
+await Notification.create({
+  recipientRole: "member",
+  recipientId: userId,
+  recipientModel: "Member",
+  message: `Your registration for ${event.title} has been rejected.`,
+  type: "REGISTRATION_REJECTED",
+});
         res.json({ success: true, message: "Request rejected successfully." });
     } catch (err) {
         console.error(err);

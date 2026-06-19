@@ -30,6 +30,7 @@ import CreatePassword from "./pages/member/CreatePassword";
 import MemberIndividualEvents from "./pages/member/Events";
 import SelectMembers from "./pages/admin/selectmembers";
 import MemberContactUs from "./pages/member/MemberContactUs";
+import Notifications from "./pages/Notifications";
 
 // New components for managing event members
 import EventMembers from "./pages/admin/Eventmembers";
@@ -50,6 +51,7 @@ const routes = [
             { path: "/contactus", element: <ContactUs /> },
             { path: "/members", element: <Public_Members /> },
             { path: "/events", element: <Public_Events /> },
+            { path="/notifications", element:<Notifications />},
         ],
     },
     { path: "/authentication", element: <Authentication /> },

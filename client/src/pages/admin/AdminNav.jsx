@@ -25,9 +25,12 @@ export default function AdminNavBar() {
 
   fetchUnreadCount();
 
+  const interval = setInterval(fetchUnreadCount, 5000);
+
   window.addEventListener("notificationRead", fetchUnreadCount);
 
   return () => {
+    clearInterval(interval);
     window.removeEventListener("notificationRead", fetchUnreadCount);
   };
 }, []);

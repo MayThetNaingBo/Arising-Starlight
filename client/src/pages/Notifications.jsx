@@ -44,17 +44,29 @@ export default function Notifications() {
 
       window.dispatchEvent(new Event("notificationRead"));
 
-      if (notification.type === "REGISTRATION_REQUEST" && notification.eventId) {
-        navigate(`/admin/event/${notification.eventId}/requests`);
-      }
+if (notification.type === "REGISTRATION_REQUEST" && notification.eventId) {
+  navigate(`/admin/event/${notification.eventId}/requests`);
+  return;
+}
 
-      if (
-        notification.type === "REGISTRATION_APPROVED" ||
-        notification.type === "REGISTRATION_REJECTED" ||
-        notification.type === "EVENT_ASSIGNED"
-      ) {
-        navigate("/member/events");
-      }
+if (
+  notification.type === "REGISTRATION_APPROVED" ||
+  notification.type === "REGISTRATION_REJECTED" ||
+  notification.type === "EVENT_ASSIGNED"
+) {
+  await fetch(
+    `${import.meta.env.VITE_API_URL}/api/notifications/${notification._id}/read`,
+    { method: "PUT" }
+  );
+
+  window.dispatchEvent(new Event("notificationRead"));
+
+  if (notification.eventId) {
+    navigate(`/member/event/${notification.eventId}`);
+  } else {
+    navigate("/member/events");
+  }
+}
     } catch (error) {
       console.error("Failed to mark notification as read:", error);
     }

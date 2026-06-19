@@ -6,7 +6,7 @@ export default function AdminNavBar() {
   const navigate = useNavigate();
   const [unreadCount, setUnreadCount] = useState(0);
 
-  useEffect(() => {
+ useEffect(() => {
   const fetchUnreadCount = async () => {
     try {
       const role = localStorage.getItem("role");
@@ -34,6 +34,7 @@ export default function AdminNavBar() {
     window.removeEventListener("notificationRead", fetchUnreadCount);
   };
 }, []);
+
   const handleLogout = () => {
     localStorage.clear();
     sessionStorage.clear();

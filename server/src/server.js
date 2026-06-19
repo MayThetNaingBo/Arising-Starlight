@@ -638,6 +638,7 @@ app.post("/api/events/:id/add-member", async (req, res) => {
   recipientRole: "member",
   recipientId: memberId,
   recipientModel: "Member",
+  eventId: event._id,
   message: `You have been assigned to ${event.title}.`,
   type: "EVENT_ASSIGNED",
 });
@@ -681,7 +682,6 @@ app.post("/api/events/:id/register-request", async (req, res) => {
 await Notification.create({
   recipientRole: "admin",
   eventId: event._id,
-  
   message: `A member requested to join ${event.title}.`,
   type: "REGISTRATION_REQUEST",
 });
@@ -743,6 +743,7 @@ await Notification.create({
   recipientRole: "member",
   recipientId: memberId,
   recipientModel: "Member",
+  eventId: event._id,
   message: `Your registration for ${event.title} has been approved.`,
   type: "REGISTRATION_APPROVED",
 });
@@ -773,6 +774,7 @@ await Notification.create({
   recipientRole: "member",
   recipientId: userId,
   recipientModel: "Member",
+  eventId: event._id,
   message: `Your registration for ${event.title} has been rejected.`,
   type: "REGISTRATION_REJECTED",
 });

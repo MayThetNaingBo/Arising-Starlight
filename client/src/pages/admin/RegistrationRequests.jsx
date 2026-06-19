@@ -1,125 +1,126 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 export default function RegistrationRequests() {
-    const { id } = useParams();
-    const navigate = useNavigate(); // Add navigate
-    const [requests, setRequests] = useState([]);
+  const { id } = useParams();
+  const [eventTitle, setEventTitle] = useState("");
+  const [requests, setRequests] = useState([]);
 
-    useEffect(() => {
-        fetch(`${import.meta.env.VITE_API_URL}/api/events/${id}/requests`)
-            .then((res) => res.json())
-            .then((data) => {
-                console.log("Fetched Requests:", data);
-                setRequests(Array.isArray(data) ? data : []); // Handle empty or invalid response
-            })
-            .catch((err) => console.error("Error fetching requests:", err));
-    }, [id]);
-
-    const handleApprove = async (memberId) => {
-        try {
-            const userId = localStorage.getItem("userId");
-            if (!userId) {
-                alert("You must be logged in as an admin to approve requests.");
-                return;
-            }
-
-            console.log("Admin ID:", userId);
-            console.log("Approving Member ID:", memberId);
-
-            // Approve request and add member to the event
-            const response = await fetch(
-                `${import.meta.env.VITE_API_URL}/api/events/${id}/approve-request`,
-                {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ userId: memberId }), // Send memberId for processing
-                }
-            );
-
-            const result = await response.json();
-            console.log("Approval Response:", result);
-
-            if (!response.ok) {
-                throw new Error(result.error || "Failed to approve request.");
-            }
-
-            // Update UI after approval by removing the member from requests
-            setRequests(requests.filter((req) => req._id !== memberId));
-            alert("Member approved and added to the event!");
-
-            // Navigate back to Members List to see the update
-            navigate(`/admin/event/${id}/members`);
-        } catch (err) {
-            console.error("Error approving request:", err);
-            alert("Failed to approve member. Please try again.");
-        }
-    };
-
-    const handleReject = async (userId) => {
-        try {
-            const res = await fetch(
-                `${import.meta.env.VITE_API_URL}/api/events/${id}/reject-request`, // Changed from DELETE to POST
-                {
-                    method: "POST", // Fix HTTP method
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ userId }),
-                }
-            );
-
-            if (!res.ok) throw new Error("Failed to reject request");
-
-            setRequests(requests.filter((req) => req._id !== userId));
-        } catch (err) {
-            console.error("Error rejecting request:", err);
-        }
-    };
-
-    return (
-        <div className="container mt-4">
-            <h3>Registration Requests</h3>
-            <br></br>
-            <table className="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>School</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {requests.length > 0 ? (
-                        requests.map((req) => (
-                            <tr key={req._id}>
-                                <td>{req.name}</td>
-                                <td>{req.email}</td>
-                                <td>{req.school}</td>
-                                <td>
-                                    <button
-                                        className="btn btn-warning mx-2"
-                                        onClick={() => handleApprove(req._id)}
-                                    >
-                                        Approve
-                                    </button>
-                                    <button
-                                        className="btn btn-danger"
-                                        onClick={() => handleReject(req._id)}
-                                    >
-                                        Reject
-                                    </button>
-                                </td>
-                            </tr>
-                        ))
-                    ) : (
-                        <tr>
-                            <td colSpan="4" className="text-center">
-                                No registration requests.
-                            </td>
-                        </tr>
-                    )}
-                </tbody>
-            </table>
-        </div>
+  const fetchRequests = async () => {
+    const res = await fetch(
+      `${import.meta.env.VITE_API_URL}/api/events/${id}/requests`
     );
+    const data = await res.json();
+
+    setEventTitle(data.eventTitle || "");
+    setRequests(Array.isArray(data.requests) ? data.requests : []);
+  };
+
+  useEffect(() => {
+    fetchRequests();
+  }, [id]);
+
+  const handleApprove = async (userId) => {
+    await fetch(`${import.meta.env.VITE_API_URL}/api/events/${id}/approve-request`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ userId }),
+    });
+
+    fetchRequests();
+    window.dispatchEvent(new Event("notificationRead"));
+  };
+
+  const handleReject = async (userId) => {
+    await fetch(`${import.meta.env.VITE_API_URL}/api/events/${id}/reject-request`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ userId }),
+    });
+
+    fetchRequests();
+    window.dispatchEvent(new Event("notificationRead"));
+  };
+
+  return (
+    <div className="container mt-4">
+      <h3>Registration Requests</h3>
+      <h5 className="mt-2 mb-4">Event: {eventTitle}</h5>
+
+      <table className="table table-striped">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>School</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {requests.length === 0 ? (
+            <tr>
+              <td colSpan="5" className="text-center">
+                No registration requests.
+              </td>
+            </tr>
+          ) : (
+            requests.map((request) => {
+              const member = request.member;
+
+              return (
+                <tr key={request._id}>
+                  <td>{member?.name}</td>
+                  <td>{member?.email}</td>
+                  <td>{member?.school}</td>
+                  <td>
+                    {request.status === "PENDING" && (
+                      <span className="badge bg-warning text-dark">Pending</span>
+                    )}
+                    {request.status === "APPROVED" && (
+                      <span className="badge bg-success">Approved</span>
+                    )}
+                    {request.status === "REJECTED" && (
+                      <span className="badge bg-danger">Rejected</span>
+                    )}
+                  </td>
+                  <td>
+                    {request.status === "PENDING" ? (
+                      <>
+                        <button
+                          className="btn btn-warning me-2"
+                          onClick={() => handleApprove(member._id)}
+                        >
+                          Approve
+                        </button>
+                        <button
+                          className="btn btn-danger"
+                          onClick={() => handleReject(member._id)}
+                        >
+                          Reject
+                        </button>
+                      </>
+                    ) : request.status === "APPROVED" ? (
+                      <button className="btn btn-secondary" disabled>
+                        Approved
+                      </button>
+                    ) : (
+                      <button className="btn btn-secondary" disabled>
+                        Rejected
+                      </button>
+                    )}
+                  </td>
+                </tr>
+              );
+            })
+          )}
+        </tbody>
+      </table>
+    </div>
+  );
 }

@@ -668,134 +668,170 @@ app.get("/api/members", async (req, res) => {
     }
 });
 app.post("/api/events/:id/register-request", async (req, res) => {
-    const { id } = req.params; // Event ID
-    const { userId } = req.body; // Member ID
+  const { id } = req.params;
+  const { userId } = req.body;
 
-    try {
-        console.log("Received UserId:", userId); // Debugging UserId
-        const event = await Event.findById(id);
-        if (!event) return res.status(404).json({ error: "Event not found" });
+  try {
+    const event = await Event.findById(id);
+    if (!event) return res.status(404).json({ error: "Event not found" });
 
-        // Check if userId is already in requests or members
-        if (
-            event.registrationRequests.includes(userId) ||
-            event.members.includes(userId)
-        ) {
-            return res
-                .status(400)
-                .json({ error: "Already registered or requested." });
-        }
-   // Add the userId to registrationRequests
-        event.registrationRequests.push(userId);
-        await event.save();
-await Notification.create({
-  recipientRole: "admin",
-  eventId: event._id,
-  message: `A member requested to join ${event.title}.`,
-  type: "REGISTRATION_REQUEST",
-});
-        console.log("Updated Requests:", event.registrationRequests); // Debugging
+    const alreadyMember = event.members.some(
+      (memberId) => memberId.toString() === userId
+    );
 
-        res.json({ success: true, message: "Registration request sent." });
-    } catch (err) {
-        console.error("Error registering request:", err);
-        res.status(500).json({ error: "Server error" });
+    const existingRequest = event.registrationRequests.find(
+      (request) => request.member.toString() === userId
+    );
+
+    if (alreadyMember || existingRequest) {
+      return res.status(400).json({
+        error: "Already registered or requested.",
+      });
     }
+
+    event.registrationRequests.push({
+      member: userId,
+      status: "PENDING",
+      requestedAt: new Date(),
+    });
+
+    await event.save();
+
+    await Notification.create({
+      recipientRole: "admin",
+      eventId: event._id,
+      message: `A member requested to join ${event.title}.`,
+      type: "REGISTRATION_REQUEST",
+    });
+
+    res.json({
+      success: true,
+      message: "Registration request sent.",
+    });
+  } catch (err) {
+    console.error("Error registering request:", err);
+    res.status(500).json({ error: "Server error" });
+  }
 });
 
 app.get("/api/events/:id/requests", async (req, res) => {
-    try {
-        const event = await Event.findById(req.params.id)
-  .populate("registrationRequests.member");
+  try {
+    const event = await Event.findById(req.params.id).populate(
+      "registrationRequests.member"
+    );
 
-res.json({
-  eventTitle: event.title,
-  requests: event.registrationRequests,
-});
-        if (!event) return res.status(404).json({ error: "Event not found" });
-
-        res.json(event.registrationRequests); // Return populated requests
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: "Server error" });
+    if (!event) {
+      return res.status(404).json({ error: "Event not found" });
     }
+
+    res.json({
+      eventTitle: event.title,
+      requests: event.registrationRequests,
+    });
+  } catch (err) {
+    console.error("Error fetching registration requests:", err);
+    res.status(500).json({ error: "Server error" });
+  }
 });
 
 app.post("/api/events/:id/approve-request", async (req, res) => {
-    const { userId } = req.body;
+  const { userId } = req.body;
 
-    try {
-        console.log("Approving request:", { eventId: req.params.id, userId });
+  try {
+    const event = await Event.findById(req.params.id);
+    if (!event) return res.status(404).json({ error: "Event not found." });
 
-        // Validate IDs
-        if (
-            !mongoose.Types.ObjectId.isValid(req.params.id) ||
-            !mongoose.Types.ObjectId.isValid(userId)
-        ) {
-            return res.status(400).json({ error: "Invalid ID format." });
-        }
+    const request = event.registrationRequests.find(
+      (request) => request.member.toString() === userId
+    );
 
-        // Fetch the event
-        const event = await Event.findById(req.params.id);
-        if (!event) {
-            return res.status(404).json({ error: "Event not found." });
-        }
-
-        const memberId = new mongoose.Types.ObjectId(userId);
-
-        // Add user to 'members' array if not already added
-        if (!event.members.includes(memberId)) {
-            event.members.push(memberId); // Add to members
-        }
-        // Remove from registration requests
-        event.registrationRequests.pull(memberId);
-
-        // Save the updated event
-        await event.save();
-await Notification.create({
-  recipientRole: "member",
-  recipientId: memberId,
-  recipientModel: "Member",
-  eventId: event._id,
-  message: `Your registration for ${event.title} has been approved.`,
-  type: "REGISTRATION_APPROVED",
-});
-        console.log("Approval Successful:", event);
-        res.json({
-            success: true,
-            message: "Member approved and added to event.",
-        });
-    } catch (err) {
-        console.error("Approval Error:", err);
-        res.status(500).json({ error: "Server error" });
+    if (!request) {
+      return res.status(404).json({ error: "Registration request not found." });
     }
+
+    request.status = "APPROVED";
+    request.reviewedAt = new Date();
+
+    event.members.addToSet(userId);
+
+    await event.save();
+
+    await Notification.updateMany(
+      {
+        recipientRole: "admin",
+        eventId: event._id,
+        type: "REGISTRATION_REQUEST",
+        isRead: false,
+      },
+      { isRead: true }
+    );
+
+    await Notification.create({
+      recipientRole: "member",
+      recipientId: userId,
+      recipientModel: "Member",
+      eventId: event._id,
+      message: `Your registration for ${event.title} has been approved.`,
+      type: "REGISTRATION_APPROVED",
+    });
+
+    res.json({
+      success: true,
+      message: "Member approved and added to event.",
+    });
+  } catch (err) {
+    console.error("Approval Error:", err);
+    res.status(500).json({ error: "Server error" });
+  }
 });
 
 app.post("/api/events/:id/reject-request", async (req, res) => {
-    const { userId } = req.body;
+  const { userId } = req.body;
 
-    try {
-        const event = await Event.findById(req.params.id);
-        if (!event) return res.status(404).json({ error: "Event not found" });
+  try {
+    const event = await Event.findById(req.params.id);
+    if (!event) return res.status(404).json({ error: "Event not found" });
 
-        // Remove user from registrationRequests
-        event.registrationRequests = event.registrationRequests.filter(
-            (id) => id.toString() !== userId
-        );
-        await event.save();
-await Notification.create({
-  recipientRole: "member",
-  recipientId: userId,
-  recipientModel: "Member",
-  eventId: event._id,
-  message: `Your registration for ${event.title} has been rejected.`,
-  type: "REGISTRATION_REJECTED",
-});
-        res.json({ success: true, message: "Request rejected successfully." });
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: "Server error" });
+    const request = event.registrationRequests.find(
+      (request) => request.member.toString() === userId
+    );
+
+    if (!request) {
+      return res.status(404).json({ error: "Registration request not found." });
     }
+
+    request.status = "REJECTED";
+    request.reviewedAt = new Date();
+
+    await event.save();
+
+    await Notification.updateMany(
+      {
+        recipientRole: "admin",
+        eventId: event._id,
+        type: "REGISTRATION_REQUEST",
+        isRead: false,
+      },
+      { isRead: true }
+    );
+
+    await Notification.create({
+      recipientRole: "member",
+      recipientId: userId,
+      recipientModel: "Member",
+      eventId: event._id,
+      message: `Your registration for ${event.title} has been rejected.`,
+      type: "REGISTRATION_REJECTED",
+    });
+
+    res.json({
+      success: true,
+      message: "Request rejected successfully.",
+    });
+  } catch (err) {
+    console.error("Reject Error:", err);
+    res.status(500).json({ error: "Server error" });
+  }
 });
 
 // Remove a member from an event's members list
@@ -837,6 +873,32 @@ app.delete("/api/events/:id/reject-request", async (req, res) => {
         console.error(err);
         res.status(500).json({ error: "Server error" });
     }
+});
+
+app.get("/api/notifications/unread-count", async (req, res) => {
+  const { role, userId } = req.query;
+
+  const query =
+    role === "admin"
+      ? { recipientRole: "admin", isRead: false }
+      : { recipientRole: "member", recipientId: userId, isRead: false };
+
+  const count = await Notification.countDocuments(query);
+
+  res.json({ count });
+});
+app.put("/api/notifications/:id/read", async (req, res) => {
+  try {
+    const notification = await Notification.findByIdAndUpdate(
+      req.params.id,
+      { isRead: true },
+      { new: true }
+    );
+
+    res.json(notification);
+  } catch (error) {
+    res.status(500).json({ message: "Failed to mark notification as read" });
+  }
 });
 
 // Get Admin Info by ID
@@ -993,31 +1055,6 @@ app.get("/api/feedback", async (req, res) => {
             message: "Failed to fetch feedback.",
         });
     }
-});
-app.get("/api/notifications/unread-count", async (req, res) => {
-  const { role, userId } = req.query;
-
-  const query =
-    role === "admin"
-      ? { recipientRole: "admin", isRead: false }
-      : { recipientRole: "member", recipientId: userId, isRead: false };
-
-  const count = await Notification.countDocuments(query);
-
-  res.json({ count });
-});
-app.put("/api/notifications/:id/read", async (req, res) => {
-  try {
-    const notification = await Notification.findByIdAndUpdate(
-      req.params.id,
-      { isRead: true },
-      { new: true }
-    );
-
-    res.json(notification);
-  } catch (error) {
-    res.status(500).json({ message: "Failed to mark notification as read" });
-  }
 });
 // Test Route
 app.get("/hello", (req, res) => res.send("Hello"));

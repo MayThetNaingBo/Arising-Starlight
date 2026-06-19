@@ -12,15 +12,24 @@ dotenv.config();
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 const notificationSchema = new mongoose.Schema({
-  recipientRole: { type: String, enum: ["admin", "member"], required: true },
-  recipientId: { type: mongoose.Schema.Types.ObjectId, refPath: "recipientModel" },
-  recipientModel: { type: String, enum: ["Admin", "Member"] },
-  message: { type: String, required: true },
-  type: { type: String },
-  isRead: { type: Boolean, default: false },
-  createdAt: { type: Date, default: Date.now },
+  recipientRole: String,
+  recipientId: mongoose.Schema.Types.ObjectId,
+  recipientModel: String,
+  eventId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Event",
+  },
+  message: String,
+  type: String,
+  isRead: {
+    type: Boolean,
+    default: false,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
 });
-
 const Notification = mongoose.model("Notification", notificationSchema);
 // Initialize App
 const app = express();
@@ -672,6 +681,7 @@ app.post("/api/events/:id/register-request", async (req, res) => {
 await Notification.create({
   recipientRole: "admin",
   eventId: event._id,
+  
   message: `A member requested to join ${event.title}.`,
   type: "REGISTRATION_REQUEST",
 });

@@ -28,18 +28,13 @@ export default function Notifications() {
   }, [role, userId]);
 
   const handleNotificationClick = (notification) => {
-    if (notification.type === "REGISTRATION_REQUEST") {
-      navigate("/admin/events");
-    }
-
-    if (
-      notification.type === "REGISTRATION_APPROVED" ||
-      notification.type === "REGISTRATION_REJECTED" ||
-      notification.type === "EVENT_ASSIGNED"
-    ) {
-      navigate("/member/events");
-    }
-  };
+  if (
+    notification.type === "REGISTRATION_REQUEST" &&
+    notification.eventId
+  ) {
+    navigate(`/admin/event/${notification.eventId}/requests`);
+  }
+};
 
   return (
     <div className="container mt-4">

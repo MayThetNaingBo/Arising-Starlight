@@ -1,91 +1,87 @@
-# Arising Starlight
+# Arising Starlight CCA Management System
 
-Arising Starlight is a full-stack CCA club and event management platform designed to streamline member engagement, event organization, registration management, and administrative operations.
+A full-stack web application developed to streamline the management of CCA (Co-Curricular Activity) events, member registration, attendance, notifications, and communication between administrators and members.
 
-The platform provides separate experiences for public users, registered members, and administrators, allowing organizations to efficiently manage events, member information, and communication through a centralized system.
+## Overview
+
+Arising Starlight is a centralized platform that allows CCA administrators to manage members and events while providing members with a simple interface to register for activities, receive notifications, and stay updated with club information.
+
+The system includes role-based access control, event registration workflows, approval management, feedback handling, email onboarding, and real-time notification features.
 
 ## Features
 
-### Public Users
+### Public Features
 
-- View organization information
+- View CCA information
 - Browse upcoming events
-- View member information
-- Contact organization administrators
-- Submit registration requests
+- View member directory
+- Contact the organization through feedback forms
 
 ### Member Features
 
 - Secure member login
-- Member dashboard
-- View upcoming events
-- View event details
-- Manage personal profile
-- Contact administrators
-- Create account password after approval
+- Profile management
+- View assigned events
+- Request event registration
+- Receive event approval/rejection notifications
+- Receive event assignment notifications
 
 ### Administrator Features
 
-- Secure admin authentication
-- Create events
-- Edit events
-- Delete events
-- Manage member profiles
-- Approve registration requests
-- Manage organization information
-- Manage contact information
-- View event participants
+- Administrator authentication
+- Member management (Create, Update, Delete)
+- Event management (Create, Update, Delete)
 - Assign members to events
+- Review event registration requests
+- Approve or reject registrations
+- Manage feedback submissions
+- Notification management dashboard
 
 
-## Tech Stack
+## Technology Stack
 
 ### Frontend
 
-* React
-* Vite
-* React Router
-* Bootstrap
-* React Bootstrap
-* Axios
-* React Icons
+- React
+- React Router
+- Bootstrap
+- CSS3
 
 ### Backend
 
-* Node.js
-* Express.js
-* MongoDB
-* Mongoose
-* Firebase Admin SDK
-* Nodemailer
-* Bcrypt
+- Node.js
+- Express.js
 
-### Services
+### Database
 
-* Firebase Authentication
-* Email Services
-* MongoDB Database
+- MongoDB Atlas
+- Mongoose
 
-## Screenshots
+### Authentication
 
-### Home Page
-![Home Page](./screenshots/home-page.png)
+- Firebase Authentication
+- bcrypt password hashing
 
-### Member Dashboard
-![Member Dashboard](./screenshots/member-dashboard.png)
+### Email Services
 
-### Event Management
-![Event Management](./screenshots/manage-events.png)
+- Resend
 
-### Registration Requests
-![Registration Requests](./screenshots/registration-requests.png)
-```
+### Deployment
 
-## Demo
+- Frontend: Vercel
+- Backend: Render
+- Database: MongoDB Atlas
 
-## Demo
 
-![Arising Starlight Demo](./screenshots/demo.gif)
+## Event Registration Workflow
+
+1. Member submits registration request.
+2. Admin receives notification.
+3. Admin reviews request.
+4. Request is approved or rejected.
+5. Member receives notification.
+6. Event participation status is updated.
+
 
 
 ## Installation
@@ -97,31 +93,20 @@ git clone https://github.com/MayThetNaingBo/Arising-Starlight.git
 cd arising-starlight
 ```
 
-## Backend Setup
+### Environment Variables
+
+Copy `.env.example` to `.env` in both server and client folders and fill in your own values.
+
+
+### Backend Setup
 
 ```bash
 cd server
 npm install
-```
-
-### Environment Variables
-
-Copy `.env.example` to `.env` and fill in your own values.
-
-
-Start backend:
-
-```bash
 npm run dev
 ```
 
-Server:
-
-```text
-http://localhost:5000
-```
-
-## Frontend Setup
+### Frontend Setup
 
 ```bash
 cd client
@@ -129,76 +114,26 @@ npm install
 npm run dev
 ```
 
-Frontend:
+### Demo
 
-```text
-${import.meta.env.VITE_API_URL}
-```
 
-## User Roles
+## Future Improvements
 
-### Public User
-
-Can:
-
-* View organization information
-* Browse events
-* Contact organization
-* Submit registration requests
-
-### Member
-
-Can:
-
-* Access member dashboard
-* View event information
-* Manage profile
-* Participate in club activities
-
-### Administrator
-
-Can:
-
-* Manage events
-* Manage members
-* Approve registrations
-* View participant lists
-* Update organization information
-
-## How It Works
-
-1. Public user accesses the website.
-2. User submits a registration request.
-3. Administrator reviews the request.
-4. Approved users receive access instructions.
-5. Member creates password and logs in.
-6. Member accesses club resources and events.
-7. Administrators manage events and participants through the admin dashboard.
-
-## Security Features
-
-* Password hashing using Bcrypt
-* Role-based access control
-* Protected admin routes
-* Secure authentication workflow
-* Firebase Admin integration
-
-## What I Have Learned
-
-* Full-stack application development
-* React component architecture
-* REST API development
-* MongoDB database design
-* User role management
-* Authentication and authorization
-* Email notification systems
-* Firebase integration
-* Event management workflows
-* Responsive UI design
-
+* Real-time notifications using Socket.IO
+* Attendance tracking system
+* Event check-in QR codes
+* Role-based permissions
+* Analytics dashboard
+* Mobile responsive redesign
+* Calendar integration
+* Email notification templates
 
 ## Author
 
 **May Thet Naing Bo**
 
-Software Developer focused on Full-Stack Development, DevOps, Cloud Technologies, and AI-powered Applications.
+Diploma in Information Technology (Software Development)
+Temasek Polytechnic
+
+GitHub: https://github.com/MayThetNaingBo
+LinkedIn: https://www.linkedin.com/in/may-thet-naing-bo

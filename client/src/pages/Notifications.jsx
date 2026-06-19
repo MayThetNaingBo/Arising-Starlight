@@ -27,14 +27,38 @@ export default function Notifications() {
     fetchNotifications();
   }, [role, userId]);
 
-  const handleNotificationClick = (notification) => {
-  if (
-    notification.type === "REGISTRATION_REQUEST" &&
-    notification.eventId
-  ) {
-    navigate(`/admin/event/${notification.eventId}/requests`);
-  }
-};
+  const handleNotificationClick = async (notification) => {
+    try {
+      await fetch(
+        `${import.meta.env.VITE_API_URL}/api/notifications/${notification._id}/read`,
+        {
+          method: "PUT",
+        }
+      );
+
+      setNotifications((prev) =>
+        prev.map((item) =>
+          item._id === notification._id ? { ...item, isRead: true } : item
+        )
+      );
+
+      window.dispatchEvent(new Event("notificationRead"));
+
+      if (notification.type === "REGISTRATION_REQUEST" && notification.eventId) {
+        navigate(`/admin/event/${notification.eventId}/requests`);
+      }
+
+      if (
+        notification.type === "REGISTRATION_APPROVED" ||
+        notification.type === "REGISTRATION_REJECTED" ||
+        notification.type === "EVENT_ASSIGNED"
+      ) {
+        navigate("/member/events");
+      }
+    } catch (error) {
+      console.error("Failed to mark notification as read:", error);
+    }
+  };
 
   return (
     <div className="container mt-4">
@@ -53,6 +77,7 @@ export default function Notifications() {
                 borderLeft: notification.isRead
                   ? "5px solid #ccc"
                   : "5px solid #f7b500",
+                opacity: notification.isRead ? 0.7 : 1,
               }}
               onClick={() => handleNotificationClick(notification)}
             >

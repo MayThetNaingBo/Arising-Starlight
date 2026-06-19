@@ -991,6 +991,19 @@ app.get("/api/notifications/unread-count", async (req, res) => {
 
   res.json({ count });
 });
+app.put("/api/notifications/:id/read", async (req, res) => {
+  try {
+    const notification = await Notification.findByIdAndUpdate(
+      req.params.id,
+      { isRead: true },
+      { new: true }
+    );
+
+    res.json(notification);
+  } catch (error) {
+    res.status(500).json({ message: "Failed to mark notification as read" });
+  }
+});
 // Test Route
 app.get("/hello", (req, res) => res.send("Hello"));
 

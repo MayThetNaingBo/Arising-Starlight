@@ -1,4 +1,3 @@
-// Notifications.jsx
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -28,21 +27,50 @@ export default function Notifications() {
     fetchNotifications();
   }, [role, userId]);
 
-  return (
-    <div
-  key={notification._id}
-  className="card mb-3 shadow-sm"
-  style={{
-    cursor: "pointer",
-    borderLeft: notification.isRead
-      ? "5px solid #ccc"
-      : "5px solid #f7b500",
-  }}
-  onClick={() => {
+  const handleNotificationClick = (notification) => {
     if (notification.type === "REGISTRATION_REQUEST") {
       navigate("/admin/events");
     }
-  }}
-></div>
+
+    if (
+      notification.type === "REGISTRATION_APPROVED" ||
+      notification.type === "REGISTRATION_REJECTED" ||
+      notification.type === "EVENT_ASSIGNED"
+    ) {
+      navigate("/member/events");
+    }
+  };
+
+  return (
+    <div className="container mt-4">
+      <h3>Notifications</h3>
+
+      {notifications.length === 0 ? (
+        <p className="mt-4 text-center">No notifications yet.</p>
+      ) : (
+        <div className="mt-4">
+          {notifications.map((notification) => (
+            <div
+              key={notification._id}
+              className="card mb-3 shadow-sm"
+              style={{
+                cursor: "pointer",
+                borderLeft: notification.isRead
+                  ? "5px solid #ccc"
+                  : "5px solid #f7b500",
+              }}
+              onClick={() => handleNotificationClick(notification)}
+            >
+              <div className="card-body">
+                <p className="mb-1">{notification.message}</p>
+                <small className="text-muted">
+                  {new Date(notification.createdAt).toLocaleString()}
+                </small>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
   );
 }

@@ -38,7 +38,7 @@ export default function MemberHome() {
 
     return (
         <div className="container mt-4">
-            <h3>CCA Member List Members </h3>
+            <h3>CCA Member List ( Member ) </h3>
             <div className="search-bar">
                 <input
                     type="text"

@@ -7,25 +7,30 @@ export default function AdminNavBar() {
   const [unreadCount, setUnreadCount] = useState(0);
 
   useEffect(() => {
-    const fetchUnreadCount = async () => {
-      try {
-        const role = localStorage.getItem("role");
-        const userId = localStorage.getItem("userId");
+  const fetchUnreadCount = async () => {
+    try {
+      const role = localStorage.getItem("role");
+      const userId = localStorage.getItem("userId");
 
-        const res = await fetch(
-          `${import.meta.env.VITE_API_URL}/api/notifications/unread-count?role=${role}&userId=${userId}`
-        );
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/notifications/unread-count?role=${role}&userId=${userId}`
+      );
 
-        const data = await res.json();
-        setUnreadCount(data.count || 0);
-      } catch (error) {
-        console.error("Failed to fetch unread notifications:", error);
-      }
-    };
+      const data = await res.json();
+      setUnreadCount(data.count || 0);
+    } catch (error) {
+      console.error("Failed to fetch unread notifications:", error);
+    }
+  };
 
-    fetchUnreadCount();
-  }, []);
+  fetchUnreadCount();
 
+  window.addEventListener("notificationRead", fetchUnreadCount);
+
+  return () => {
+    window.removeEventListener("notificationRead", fetchUnreadCount);
+  };
+}, []);
   const handleLogout = () => {
     localStorage.clear();
     sessionStorage.clear();

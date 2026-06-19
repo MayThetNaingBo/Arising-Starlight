@@ -30,7 +30,7 @@ export default function EventList() {
     return (
         <div className="container mt-4">
             <div className="d-flex justify-content-between align-items-center mb-4">
-                <h3>CCA Event List ( Members )</h3>
+                <h3>CCA Event List ( Member )</h3>
             </div>
 
             <div className="search-bar">

@@ -88,8 +88,17 @@ const eventSchema = new mongoose.Schema({
     description: String,
     members: [{ type: mongoose.Schema.Types.ObjectId, ref: "Member" }],
     registrationRequests: [
-        { type: mongoose.Schema.Types.ObjectId, ref: "Member" },
-    ],
+  {
+    member: { type: mongoose.Schema.Types.ObjectId, ref: "Member" },
+    status: {
+      type: String,
+      enum: ["PENDING", "APPROVED", "REJECTED"],
+      default: "PENDING",
+    },
+    requestedAt: { type: Date, default: Date.now },
+    reviewedAt: Date,
+  },
+],
 });
 
 const feedbackSchema = new mongoose.Schema({
@@ -696,9 +705,13 @@ await Notification.create({
 
 app.get("/api/events/:id/requests", async (req, res) => {
     try {
-        const event = await Event.findById(req.params.id).populate(
-            "registrationRequests"
-        );
+        const event = await Event.findById(req.params.id)
+  .populate("registrationRequests.member");
+
+res.json({
+  eventTitle: event.title,
+  requests: event.registrationRequests,
+});
         if (!event) return res.status(404).json({ error: "Event not found" });
 
         res.json(event.registrationRequests); // Return populated requests

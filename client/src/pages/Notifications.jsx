@@ -27,13 +27,23 @@ export default function Notifications() {
     fetchNotifications();
   }, [role, userId]);
 
-  const handleNotificationClick = async (notification) => {
-    try {
+ const handleNotificationClick = async (notification) => {
+  try {
+    // Admin notification: only navigate, do NOT mark as read here
+    if (notification.type === "REGISTRATION_REQUEST" && notification.eventId) {
+      navigate(`/admin/event/${notification.eventId}/requests`);
+      return;
+    }
+
+    // Member notifications: mark as read when clicked
+    if (
+      notification.type === "REGISTRATION_APPROVED" ||
+      notification.type === "REGISTRATION_REJECTED" ||
+      notification.type === "EVENT_ASSIGNED"
+    ) {
       await fetch(
         `${import.meta.env.VITE_API_URL}/api/notifications/${notification._id}/read`,
-        {
-          method: "PUT",
-        }
+        { method: "PUT" }
       );
 
       setNotifications((prev) =>
@@ -44,33 +54,16 @@ export default function Notifications() {
 
       window.dispatchEvent(new Event("notificationRead"));
 
-if (notification.type === "REGISTRATION_REQUEST" && notification.eventId) {
-  navigate(`/admin/event/${notification.eventId}/requests`);
-  return;
-}
-
-if (
-  notification.type === "REGISTRATION_APPROVED" ||
-  notification.type === "REGISTRATION_REJECTED" ||
-  notification.type === "EVENT_ASSIGNED"
-) {
-  await fetch(
-    `${import.meta.env.VITE_API_URL}/api/notifications/${notification._id}/read`,
-    { method: "PUT" }
-  );
-
-  window.dispatchEvent(new Event("notificationRead"));
-
-  if (notification.eventId) {
-    navigate(`/member/event/${notification.eventId}`);
-  } else {
-    navigate("/member/events");
-  }
-}
-    } catch (error) {
-      console.error("Failed to mark notification as read:", error);
+      if (notification.eventId) {
+        navigate(`/member/event/${notification.eventId}`);
+      } else {
+        navigate("/member/events");
+      }
     }
-  };
+  } catch (error) {
+    console.error("Failed to handle notification click:", error);
+  }
+};
 
   return (
     <div className="container mt-4">

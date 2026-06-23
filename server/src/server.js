@@ -44,6 +44,7 @@ app.use(
     origin: [
       "http://localhost:5173",
       "https://arising-starlight.vercel.app",
+      "https://starlightcca.maythetnaingbo.com",
     ],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,

@@ -130,7 +130,7 @@ npm run dev
 
 ## Author
 
-**May Thet Naing Bo**
+**May Thet Naing Bo**<br>
 Diploma in Information Technology<br>
 Temasek Polytechnic<br>
 https://maythetnaingbo.com

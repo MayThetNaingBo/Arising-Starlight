@@ -131,7 +131,6 @@ npm run dev
 ## Author
 
 **May Thet Naing Bo**
-
 Diploma in Information Technology<br>
 Temasek Polytechnic<br>
 https://maythetnaingbo.com

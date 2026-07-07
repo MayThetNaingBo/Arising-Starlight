@@ -134,6 +134,4 @@ npm run dev
 
 Diploma in Information Technology (Software Development)
 Temasek Polytechnic
-
-GitHub: https://github.com/MayThetNaingBo
-LinkedIn: https://www.linkedin.com/in/may-thet-naing-bo
+https:maythetnaingbo.com 

@@ -134,4 +134,4 @@ npm run dev
 
 Diploma in Information Technology<br>
 Temasek Polytechnic<br>
-🌐 https://maythetnaingbo.com
+https://maythetnaingbo.com

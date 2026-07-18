@@ -43,7 +43,7 @@ export default function MemberHome() {
                 <input
                     type="text"
                     className="search-input"
-                    placeholder="Search events by title"
+                    placeholder="Search members by name"
                     value={searchTerm}
                     onChange={handleSearch}
                 />

@@ -65,7 +65,7 @@ export default function EventList() {
             {/* No Events Message */}
             {filteredEvents.length === 0 && (
                 <div className="no-events">
-                    <p>No events found matching your search criteria.</p>
+                    <p>Please wait for a few seconds for the events to appear.</p>
                 </div>
             )}
         </div>
